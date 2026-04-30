@@ -4,6 +4,6 @@
 
 int main()
 {
-    std::cout << 'First Task';
+    std::cout << "First Task";
 }
 
