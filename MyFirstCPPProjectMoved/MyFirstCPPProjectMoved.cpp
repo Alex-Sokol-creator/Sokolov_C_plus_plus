@@ -6,7 +6,6 @@
 int main() // Вход в программу
 {
     // строчный комментарий
-    // Test
 
     int number = 10;
     long lNumber = 1212121;
