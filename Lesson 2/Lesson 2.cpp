@@ -22,6 +22,10 @@ namespace MyNamespace {
 
 using namespace std;
 
+enum Status {
+    Online,Offline
+};
+
 int main()
 {
     ////setlocale(0, "uk-Uk"); Тоже кириллица, но для украинского не подходит
@@ -29,6 +33,13 @@ int main()
     SetConsoleCP(1251); // Выводит кириллицу нормально
     SetConsoleOutputCP(1251);
     ////int cout = 10;
+
+    //bool isOnline;
+    //cin >> isOnline;
+
+    //Status status = (isOnline) ? Online : Offline;
+
+    //cout << status << '\n';
 
     //cout << "Привет мир" << '\n';
 
@@ -54,20 +65,72 @@ int main()
 
     //cout << typeid(integer).name() << ' ' << integer << '\n';
 
-    int num1, num2;
-    cin >> num1 >> num2;
+    //int num1, num2;
+    //cin >> num1 >> num2;
 
-    if (num1 == num2) {
-        cout << "Числа равные" << '\n';
-    }
-    else if (num1 > num2) {
-        cout << "Первое число больше второго" << '\n';
-    }
-    else{
-        cout << "Второе число больше первого" << '\n';
-    }
+    //if (num1 == num2) {
+    //    cout << "Числа равные" << '\n';
+    //}
+    //else if (num1 > num2) {
+    //    cout << "Первое число больше второго" << '\n';
+    //}
+    //else{
+    //    cout << "Второе число больше первого" << '\n';
+    //}
     //else {
     //    cout << "Числа не равные" << '\n';
     //}
 
+    //int num;
+    //cin >> num;
+    //if (num > 5 && num < 15) {
+    //    cout << "Число в диапазоне от 5 до 15" << '\n';
+    //}
+    //else {
+    //    cout << "Число не в диапазоне" << '\n';
+    //}
+
+    // and - &&
+    // or - ||
+    // not - !
+
+    //int userStatus;
+    //cin >> userStatus;
+
+    //if (userStatus == -1 || userStatus == 1) // Unknown or Offline
+    //{
+    //    cout << "Пользователь не в сети" << '\n';
+    //}
+
+    //bool isOnline = true;
+
+    //if (isOnline == true) {
+    //    cout << "Пользователь в сети" << '\n';
+    //}
+
+    //int num;
+    //cin >> num;
+
+    //cout << ((num % 2 == 0) ? "Number is edd\n" : "Number is odd\n");
+    //
+    //if (num % 2 == 0) {
+    //    cout << "Number is edd\n";
+    //}
+    //else{
+    //    cout << "Number is odd\n";
+    //}
+
+    int day;
+    cin >> day;
+
+    switch (day) {
+    case 1: cout << "Понедельник\n"; break;
+    case 2: cout << "Вторник\n"; break;
+    case 3: cout << "Среда\n"; break;
+    case 4: cout << "Четверг\n"; break;
+    case 5: cout << "Пятница\n"; break;
+    case 6: cout << "Суббота\n"; break;
+    case 7: cout << "Воскресенье\n"; break;
+    default: cout << "Данные некорректные\n"; break;
+    }
 }
