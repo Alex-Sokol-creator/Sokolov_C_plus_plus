@@ -1,20 +1,91 @@
-// Lesson 3.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+
 
 #include <iostream>
 
+using namespace std;
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    /*std::cout << "Hello World!\n";
+    std::cout << "Polina Lox\n";*/
+
+    /*int counter = 0;
+    int times;
+
+    cin >> times;*/
+
+    /*while (counter < times) {
+        std::cout << counter << ' ';
+        counter++;
+    }*/
+
+    /*do {
+        cout << counter << ' ';
+        counter++;
+    } while (counter < times);*/
+
+    /*int i = 0;*/
+
+    /*for (int i = 0; i < 10; i++) {
+        cout << i << ' ';
+    }*/
+
+    /*double num1, num2;
+    char action;
+    char answer;
+
+    while (true) {
+        cout << "Enter first number: ";
+        cin >> num1;
+
+        cout << "Enter second number: ";
+        cin >> num2;
+
+        cout << "Choose operation(+, -, *, / ): ";
+        cin >> action;
+
+        switch (action) {
+        case '+': cout << num1 << " + " << num2 << " = " << num1 + num2 << '\n'; break;
+        case '-': cout << num1 << " - " << num2 << " = " << num1 - num2 << '\n'; break;
+        case '*': cout << num1 << " * " << num2 << " = " << num1 * num2 << '\n'; break;
+        case '/': cout << num1 << " / " << num2 << " = " << num1 / num2 << '\n'; break;
+        default: cout << "Incorrect operation\n";
+        }
+
+        cout << "Do you want to continue? (y/n)\n>";
+        cin >> answer;
+        if (answer == 'n') break;
+    }
+    cout << "Ok, bye!";*/
+
+    /*for (int i = 0; i < 100; i++) {
+        if (i % 4 == 0) continue;
+        cout << i << ' ';
+    }*/
+
+    /*for (int i = 0; i < 10; i++) {
+        cout << i << " Iteration" << ": ";
+        for (int j = 0; j < 5; j++) {
+            cout << j << ' ';
+        }
+        cout << '\n';
+    }*/
+
+    int width;
+    int height;
+    char symbol;
+
+    cout << "Enter width: ";
+    cin >> width;
+    cout << "Enter height: ";
+    cin >> height;
+    cout << "Enter symbol: ";
+    cin >> symbol;
+
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            cout << symbol;
+        }
+        cout << '\n';
+    }
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
