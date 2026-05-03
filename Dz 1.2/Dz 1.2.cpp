@@ -14,9 +14,9 @@ int main()
         std::cout << "Введите время в секундах для их конвертации: ";
         long seconds_time;
         std::cin >> seconds_time;
-        int minuts_time = seconds_time / 60.0;
+        float minuts_time = seconds_time / 60.0;
         std::cout << '\n' << "В минутах это: " << minuts_time << "минут(ы)";
-        int hours_time = seconds_time / 3600.0;
+        float hours_time = seconds_time / 3600.0;
         std::cout << '\n' << "В часах это: " << hours_time << "часа(ов)";
         std::cout << '\n' << "В секундах это: " << seconds_time << "секунд(ы)";
     }
