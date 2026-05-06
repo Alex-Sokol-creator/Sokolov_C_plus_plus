@@ -157,15 +157,64 @@ int main()
 
 	{
 		cout << "\nSixth Task\n";
-		cout << "Добро пожаловать в программу конвертации валют\n";
 		while (true) {
+			cout << "Добро пожаловать в программу конвертации валют\n";
 			int choice;
-			cout << "Какую операцию вы хотите выбрать? (1 - посмотреть курсы валют, 2 - конвертировать валюту, 3 - конвертер валют в банках, 4 - выход из программы): ";
+			int choicemoney1;
+			int choicemoney2;
+			double amountmoney;
+			cout << "Какую операцию вы хотите выбрать? (1 - посмотреть курсы валют, 2 - конвертировать валюту, 3 - выход из программы): ";
 			cin >> choice;
 			switch (choice) {
 			case 1: {
-
+				cout << "По состоянию на 6 мая 2026 года, чтобы купить 1 иностранную валюту, в гривне надо заплатить: \n";
+				cout << "Евро EUR: 51,85 грн\n";
+				cout << "Доллар USD: 44,15 грн\n";
+				cout << "Фунт Стерлингов GBP: 59,53 грн\n";
+				cout << "Польский злотый PLN: 12,08 грн\n";
+				break;
 			}
+			case 2: {
+				cout << "Из какой валюты вы хотите провести конвертацию? (1 - UAN, 2 - EUR, 3 - USD, 4 - GBP, 5 - PLN): ";
+				cin >> choicemoney1;
+				cout << "Введите сколько валюты вы хотите конвертировать: ";
+				cin >> amountmoney;
+				switch (choicemoney1) {
+				case 1: {
+					cout << "В какую валюту вы хотите конвертировать? (1 - EUR, 2 - USD, 3 - GBP, 4 - PLN): ";
+					cin >> choicemoney2;
+					switch (choicemoney2) {
+					case 1: {
+						double convertation;
+						convertation = amountmoney / 51.85;
+						cout << "За " << amountmoney << " грн вы получите по курсу 51,85: " << convertation << " евро\n";
+						break;
+					}
+					case 2: {
+						double convertation;
+						convertation = amountmoney / 44.15;
+						cout << "За " << amountmoney << " грн вы получите по курсу 44,15: " << convertation << " долларов\n";
+						break;
+					}
+					case 3: {
+						double convertation;
+						convertation = amountmoney / 59.53;
+						cout << "За " << amountmoney << " грн вы получите по курсу 59,53: " << convertation << " фунтов\n";
+						break;
+					}
+					case 4: {
+						double convertation;
+						convertation = amountmoney / 12.08;
+						cout << "За " << amountmoney << " грн вы получите по курсу 12,08: " << convertation << " злотых\n";
+						break;
+					}
+					default: cout << "Вы ввели недоступный знак\n";
+					}
+					break;
+				}
+				}
+			}
+			case 3: { break; }
 			}
 		}
 	}
