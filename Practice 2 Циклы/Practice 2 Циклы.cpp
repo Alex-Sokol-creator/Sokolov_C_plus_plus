@@ -163,6 +163,14 @@ int main()
 			int choicemoney1;
 			int choicemoney2;
 			double amountmoney;
+			double amountmoneyeur;
+			double amountmoneyusd;
+			double amountmoneygbp;
+			double amountmoneypln;
+			double eurprice = 51.85;
+			double usdprice = 44.15;
+			double gbpprice = 59.53;
+			double plnprice = 12.08;
 			cout << "Какую операцию вы хотите выбрать? (1 - посмотреть курсы валют, 2 - конвертировать валюту, 3 - выход из программы): ";
 			cin >> choice;
 			switch (choice) {
@@ -179,6 +187,9 @@ int main()
 				cin >> choicemoney1;
 				cout << "Введите сколько валюты вы хотите конвертировать: ";
 				cin >> amountmoney;
+				if (choicemoney1 == 2) {
+					amountmoneyeur = amountmoney * eurprice;
+				}
 				switch (choicemoney1) {
 				case 1: {
 					cout << "В какую валюту вы хотите конвертировать? (1 - EUR, 2 - USD, 3 - GBP, 4 - PLN): ";
@@ -186,25 +197,25 @@ int main()
 					switch (choicemoney2) {
 					case 1: {
 						double convertation;
-						convertation = amountmoney / 51.85;
+						convertation = amountmoney / eurprice;
 						cout << "За " << amountmoney << " грн вы получите по курсу 51,85: " << convertation << " евро\n";
 						break;
 					}
 					case 2: {
 						double convertation;
-						convertation = amountmoney / 44.15;
+						convertation = amountmoney / usdprice;
 						cout << "За " << amountmoney << " грн вы получите по курсу 44,15: " << convertation << " долларов\n";
 						break;
 					}
 					case 3: {
 						double convertation;
-						convertation = amountmoney / 59.53;
+						convertation = amountmoney / gbpprice;
 						cout << "За " << amountmoney << " грн вы получите по курсу 59,53: " << convertation << " фунтов\n";
 						break;
 					}
 					case 4: {
 						double convertation;
-						convertation = amountmoney / 12.08;
+						convertation = amountmoney / plnprice;
 						cout << "За " << amountmoney << " грн вы получите по курсу 12,08: " << convertation << " злотых\n";
 						break;
 					}
