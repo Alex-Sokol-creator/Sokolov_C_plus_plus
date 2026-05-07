@@ -163,10 +163,7 @@ int main()
 			int choicemoney1;
 			int choicemoney2;
 			double amountmoney;
-			double amountmoneyeur;
-			double amountmoneyusd;
-			double amountmoneygbp;
-			double amountmoneypln;
+			double amountmoney2;
 			double eurprice = 51.85;
 			double usdprice = 44.15;
 			double gbpprice = 59.53;
@@ -187,48 +184,57 @@ int main()
 				cin >> choicemoney1;
 				cout << "Введите сколько валюты вы хотите конвертировать: ";
 				cin >> amountmoney;
-				if (choicemoney1 == 2) {
-					amountmoneyeur = amountmoney * eurprice;
+				if (choicemoney1 == 1) {
+					amountmoney2 = amountmoney;
 				}
-				switch (choicemoney1) {
+				else if (choicemoney1 == 2) {
+					amountmoney2 = amountmoney * eurprice;
+				}
+				else if (choicemoney1 == 3) {
+					amountmoney2 = amountmoney * usdprice;
+				}
+				else if (choicemoney1 == 4) {
+					amountmoney2 = amountmoney * gbpprice;
+				}
+				else if (choicemoney1 == 5) {
+					amountmoney2 = amountmoney * plnprice;
+				}
+				cout << "В какую валюту вы хотите конвертировать? (1 - UAN, 2 - EUR, 3 - USD, 4 - GBP, 5 - PLN): ";
+				cin >> choicemoney2;
+				switch (choicemoney2) {
 				case 1: {
-					cout << "В какую валюту вы хотите конвертировать? (1 - EUR, 2 - USD, 3 - GBP, 4 - PLN): ";
-					cin >> choicemoney2;
-					switch (choicemoney2) {
-					case 1: {
-						double convertation;
-						convertation = amountmoney / eurprice;
-						cout << "За " << amountmoney << " грн вы получите по курсу 51,85: " << convertation << " евро\n";
-						break;
-					}
-					case 2: {
-						double convertation;
-						convertation = amountmoney / usdprice;
-						cout << "За " << amountmoney << " грн вы получите по курсу 44,15: " << convertation << " долларов\n";
-						break;
-					}
-					case 3: {
-						double convertation;
-						convertation = amountmoney / gbpprice;
-						cout << "За " << amountmoney << " грн вы получите по курсу 59,53: " << convertation << " фунтов\n";
-						break;
-					}
-					case 4: {
-						double convertation;
-						convertation = amountmoney / plnprice;
-						cout << "За " << amountmoney << " грн вы получите по курсу 12,08: " << convertation << " злотых\n";
-						break;
-					}
-					default: cout << "Вы ввели недоступный знак\n";
-					}
+					cout << "За " << amountmoney << " валюты вы получите: " << amountmoney2 << " гривен\n";
 					break;
 				}
+				case 2: {
+					double convertation;
+					convertation = amountmoney2 / eurprice;
+					cout << "За " << amountmoney << " валюты вы получите: " << convertation << " евро\n";
+					break;
 				}
+				case 3: {
+					double convertation;
+					convertation = amountmoney2 / usdprice;
+					cout << "За " << amountmoney << " валюты вы получите: " << convertation << " долларов\n";
+					break;
+				}
+				case 4: {
+					double convertation;
+					convertation = amountmoney2 / gbpprice;
+					cout << "За " << amountmoney << " валюты вы получите: " << convertation << " фунтов\n";
+					break;
+				}
+				case 5: {
+					double convertation;
+					convertation = amountmoney2 / plnprice;
+					cout << "За " << amountmoney << " валюты вы получите: " << convertation << " злотых\n";
+					break;
+				}
+				default: cout << "Вы ввели недоступный знак\n";
+				}
+				break;
 			}
-			case 3: { break; }
 			}
 		}
 	}
 }
-
-
