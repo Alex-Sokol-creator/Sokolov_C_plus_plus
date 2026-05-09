@@ -11,7 +11,7 @@ int main()
 	SetConsoleOutputCP(1251);
 	srand(time(NULL));
 
-	/* {
+	{
 		cout << "\nFirst Task\n";
 		int number;
 		int maxnum;
@@ -27,9 +27,9 @@ int main()
 			}
 		}
 		cout << "Максимальное число из введеных вами 7 это: " << maxnum;
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nSecond Task\n";
 		int maxfuel = 300;
 		int spending;
@@ -81,7 +81,7 @@ int main()
 					<< "км, вам минимально потребуется " << needfuel << "л топлива. \nДозаправлять в пункте В надо будет " << charging << "л топлива.";
 			}
 		}
-	}*/
+	}
 
 	{
 		cout << "\nThird Task\n";
@@ -92,7 +92,6 @@ int main()
 		double saldop3;
 		double allsal1, allsal2, allsal3;
 		int sells;
-		int bestmanager;
 		cout << "Введите объемы продаж в $ 1 менеджера: ";
 		cin >> sells;
 		if (sells < 500) {
@@ -129,20 +128,76 @@ int main()
 		allsal1 = salary + saldop1;
 		allsal2 = salary + saldop2;
 		allsal3 = salary + saldop3;
-		if (allsal1 > allsal2 && allsal1 > allsal3) {
-			allsal1 += bonus;
-			bestmanager = 1;
-		}
-		else if (allsal1 < allsal2 && allsal2 > allsal3) {
-			allsal2 += bonus;
-			bestmanager = 2;
-		}
-		else if (allsal2 < allsal3 && allsal3 > allsal1) {
-			allsal3 += bonus;
-			bestmanager = 3;
-		}
-		cout << "У первого менеджера суммарная зарплата будет " << allsal1 << " $"
 
+		double allsals[3] = { allsal1,allsal2,allsal3 };
+		int bestmanager = 0;
+		for (int i = 1; i < 3; i++) {
+			if (allsals[bestmanager] < allsals[i]) {
+				bestmanager = i;
+			}
+		}
+		allsals[bestmanager] += bonus;
+		//if (allsal1 > allsal2 && allsal1 > allsal3) {
+		//	allsal1 += bonus;
+		//	bestmanager = 1;
+		//}
+		//else if (allsal1 < allsal2 && allsal2 > allsal3) {
+		//	allsal2 += bonus;
+		//	bestmanager = 2;
+		//}
+		//else if (allsal2 < allsal3 && allsal3 > allsal1) {
+		//	allsal3 += bonus;
+		//	bestmanager = 3;
+		//}
+		cout << "У первого менеджера суммарная зарплата будет " << allsals[0] << " $, у второго " << allsals[1] << " $, а у третьего будет "
+			<< allsals[2] << " $.\nЛучший менеджер это " << bestmanager + 1;
+	}
+
+	{
+		cout << "\nFourth Task\n";
+		int salarypercode = 50;
+		int fine = 20;
+		int profitwant;
+		int latesnum;
+		cout << "Расчет для Васи\n";
+		cout << "Первый расчет. Введите желаемый доход для Васи: ";
+		cin >> profitwant;
+		cout << "Введите количество опазданий Васи: ";
+		cin >> latesnum;
+		int mustprofit = profitwant + ((latesnum / 3) * fine);
+		while (mustprofit % salarypercode != 0) {
+			mustprofit++;
+		}
+		int amountsentences = mustprofit / salarypercode * 100;
+		cout << "Для того, чтобы получить " << profitwant << " $, Вася должен написать " << amountsentences << " стрч кода, так как он опоздал такое количество раз: "
+			<< latesnum << '\n';
+
+		cout << "Второй расчет. Введите желаемый доход для Васи: ";
+		cin >> profitwant;
+		cout << "Введите количество строчек кода, написанных Васей: ";
+		int sentences;
+		cin >> sentences;
+		if ((sentences / 100 * salarypercode) < profitwant) {
+			cout << "Вася не сможет получить такой доход, так как он написал меньше строчек кода, чем нужно для такой суммы\n";
+		}
+		else {
+			int moneylast = (sentences / 100 * salarypercode) - profitwant;
+			latesnum = (moneylast / fine * 3) + 2;
+			cout << "У Васи в запасе есть " << latesnum << " опазд., чтобы получить свою зарплату\n";
+		}
+
+		cout << "Третий расчет. Введите количество строчек кода, написанных Васей: ";
+		cin >> sentences;
+		cout << "Введите количество опазданий Васи: ";
+		cin >> latesnum;
+		int sentencemoney = sentences / 100 * salarypercode;
+		int latesmoney = (latesnum / 3) * fine;
+		if (latesmoney >= sentencemoney) {
+			cout << "Васе не заплатят денег вообще, так как он слишком много раз опаздывал\n";
+		}
+		else {
+			cout << "Васе заплатят " << sentencemoney - latesmoney << " $, так как он опоздывал некритично\n";
+		}
 	}
 }
 
