@@ -141,7 +141,7 @@ int main()
 			allsal3 += bonus;
 			bestmanager = 3;
 		}
-		cout << "Наилучший менеджер это " << bestmanager << " менеджер, у него зарплата " << allsal3 << "\n"
+		cout << "У первого менеджера суммарная зарплата будет " << allsal1 << " $"
 
 	}
 }
