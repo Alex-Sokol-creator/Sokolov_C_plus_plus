@@ -12,7 +12,7 @@ int main()
 	int maxdiap = 25;
 	int maxrand = 10000;
 
-	/* {
+	{
 		cout << "\nFirst Task\n";
 		const int size = 25;
 		int numbers[size] = {};
@@ -35,9 +35,9 @@ int main()
 		}
 		cout << "Максимальное число в массиве это: " << maxnum << '\n';
 		cout << "Минимальное число в массиве это: " << minnum << '\n';
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nSecond Task\n";
 		double income[12] = {};
 		double incomeenter;
@@ -53,10 +53,18 @@ int main()
 		cin >> diapstart;
 		cout << "Введите месяц, которым закончить искать максимум и минимум: ";
 		cin >> diapend;
-		double minincome = income[diapstart-1];
-		double maxincome = income[diapstart-1];
-		int monthmax = diapstart-1, monthmin = diapstart-1;
-		for (int i = diapstart-1; i < diapend; i++) {
+		if (diapend > 12 || diapstart < 0) {
+			while (diapend > 11) {
+				diapend -= 1;
+			}
+			while (diapstart < 1) {
+				diapend += 1;
+			}
+		}
+		double minincome = income[diapstart - 1];
+		double maxincome = income[diapstart - 1];
+		int monthmax = diapstart - 1, monthmin = diapstart - 1;
+		for (int i = diapstart - 1; i < diapend; i++) {
 			if (income[i] > maxincome) {
 				maxincome = income[i];
 				monthmax = i;
@@ -68,9 +76,9 @@ int main()
 		}
 		cout << "Наилучший доход был в " << monthmax + 1 << " месяце и составил " << maxincome << ", а наихудший был в "
 			<< monthmin + 1 << " месяце, и составил " << minincome << '\n';
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nThird Task\n";
 		const int N = 10;
 		double numbers[N] = { 1.0,1.6,-0.9,-6.7,76.12,-2.5, 4.0, 12.3, -7.1, 0.5 };
@@ -125,9 +133,9 @@ int main()
 				<< "\nСумма элементов между первый отрицательным числом " << numbers[firstnegative] << " и последним отрицательным числом "
 				<< numbers[secondnegative] << " : " << sumbetweennegative << '\n';
 		}
-	}*/
+	}
 
-	/*{
+	{
 		cout << "\nFourth Task\n";
 		int numbers[10] = { 1,2,3,4,5,6,7,8,9,10 };
 		int masiv1[5] = {}, masiv2[5] = {};
@@ -154,11 +162,31 @@ int main()
 		for (int num : masiv2) {
 			cout << num << ' ';
 		}
-	}*/
+	}
 
 	{
 		cout << "\nFifth Task\n";
-
+		const int size = 5;
+		int masiv1[size] = { 10, 15, 0, -23, 40 };
+		int masiv2[size] = { 6, 0, -100, 25, -4 };
+		int masiv3[size] = {};
+		int place = 0;
+		for (int i = 0; i < size; i++) {
+			masiv3[place] = masiv1[i] + masiv2[i];
+			place += 1;
+		}
+		cout << "Вот 1 массив: ";
+		for (int num : masiv1) {
+			cout << num << ' ';
+		}
+		cout << "\nВот 2 массив: ";
+		for (int num : masiv2) {
+			cout << num << ' ';
+		}
+		cout << "\nА вот третий массив, в котором суммы элементов с одинаковыми индексами прошлых 2 массивов:\n ";
+		for (int num : masiv3) {
+			cout << num << ' ';
+		}
 	}
 }
 
