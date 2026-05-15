@@ -58,7 +58,7 @@ int main()
 				diapend -= 1;
 			}
 			while (diapstart < 1) {
-				diapend += 1;
+				diapstart += 1;
 			}
 		}
 		double minincome = income[diapstart - 1];
