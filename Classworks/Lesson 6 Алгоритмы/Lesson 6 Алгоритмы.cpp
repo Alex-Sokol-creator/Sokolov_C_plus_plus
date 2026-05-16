@@ -79,5 +79,58 @@ int main()
         cout << num << ' ';
     }
     cout << '\n';
+
+    for (int i = 1; i < size; i++) {
+        int temp = arr[i];
+        int j = i - 1;
+
+        while (j >= 0 && arr[j] > temp) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = temp;
+    }
+
+    cout << "Sorted array: ";
+    for (int num : arr) {
+        cout << num << ' ';
+    }
+    cout << '\n';
+
+    int searchnumber;
+    cout << "Enter number: ";
+    cin >> searchnumber;
+
+    int searchindex = -1;
+
+    //Linear search
+    /*for (int i = 0; i < size; i++) {
+        if (arr[i] == searchnumber) {
+            searchindex = i;
+            break;
+        }
+    }*/
+
+    //Binary search
+    int left = 0;
+    int right = size - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == searchnumber) {
+            searchindex = mid;
+            break;
+        }
+        else if (arr[mid] < searchnumber) {
+            left = mid + 1;
+        }
+        else {
+            right = mid - 1;
+        }
+    }
+
+    if (searchindex == -1) { cout << "Number was not found\n"; }
+    else { cout << "Number found. Index: " << searchindex << '\n'; }
 }
 
