@@ -138,6 +138,7 @@ int main()
 		int min = -15;
 		int move;
 		int destination = 0;
+		int end;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 6; j++) {
 				masiv[i][j] = rand() % (max - min + 1) + min;
@@ -164,12 +165,13 @@ int main()
 				for (int i = 0; i < move; i++) {
 					for (int j = 0; j < 3; j++) {
 						temp = masiv[j][0];
-						for (int t = 0; t < 5; t--) {
+						for (int t = 0; t < 5; t++) {
 							masiv[j][t] = masiv[j][t + 1];
 						}
 						masiv[j][5] = temp;
 					}
 				}
+				break;
 			}
 			case 2: {
 				for (int i = 0; i < move; i++) {
@@ -192,6 +194,19 @@ int main()
 						masiv[j][0] = temp;
 					}
 				}
+				break;
+			}
+			case 3: {
+				for (int i = 0; i < move; i++) {
+					for (int t = 0; t < 6; t++) {
+						temp = masiv[0][t];
+						for (int j = 0; j < 2; j++) {
+							masiv[j][t] = masiv[j + 1][t];
+						}
+						masiv[2][t] = temp;
+					}
+				}
+				break;
 			}
 			case 4: {
 				for (int i = 0; i < move; i++) {
@@ -203,14 +218,20 @@ int main()
 						masiv[0][t] = temp;
 					}
 				}
+				break;
 			}
 			}
-			cout << "Вот отформаированный массив: \n";
+			cout << "Вот отформатированный массив: \n";
 			for (int i = 0; i < 3; i++) {
 				for (int num : masiv[i]) {
 					cout << num << ' ';
 				}
 				cout << '\n';
+			}
+			cout << "Завершить программу? (0 - да, 1 - нет): ";
+			cin >> end;
+			if (end == 0) {
+				break;
 			}
 		}
 	}
