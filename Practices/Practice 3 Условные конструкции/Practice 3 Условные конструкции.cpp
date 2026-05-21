@@ -113,7 +113,7 @@ int main()
 		}
 	}*/
 
-	{
+	/*{
 		cout << "\nSeventh Task\n";
 		cout << "Добро пожаловать в калькулятор\n";
 		double num1, num2;
@@ -172,6 +172,11 @@ int main()
 				break;
 			}
 		}
+	}*/
+
+	{
+		cout << "\nEighth Task\n";
+
 	}
 }
 
