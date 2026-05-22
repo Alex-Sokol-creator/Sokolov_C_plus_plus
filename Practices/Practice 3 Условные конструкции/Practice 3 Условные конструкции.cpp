@@ -9,7 +9,7 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	/* {
+	{
 		cout << "\nFirst Task\n";
 		int num;
 		cout << "Введите число на проверку парности: ";
@@ -20,9 +20,9 @@ int main()
 		else {
 			cout << "Число не парное";
 		}
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nSecond Task\n";
 		double num1, num2;
 		cout << "Введите 1 число: ";
@@ -38,9 +38,9 @@ int main()
 		else {
 			cout << "Числа равные";
 		}
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nThird Task\n";
 		double num;
 		cout << "Введите число: ";
@@ -54,9 +54,9 @@ int main()
 		else {
 			cout << "Число равно нулю";
 		}
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nFourth Task\n";
 		double num1, num2;
 		cout << "Введите 1 число: ";
@@ -74,9 +74,9 @@ int main()
 				cout << num1 << ' ' << num2;
 			}
 		}
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nFifth Task\n";
 		int grade1, grade2, grade3, grade4, grade5;
 		double average;
@@ -98,9 +98,9 @@ int main()
 		else {
 			cout << "Студент не допускается к экзамену, так как его средний балл " << average << " , что меньше 4";
 		}
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nSixth Task\n";
 		int num;
 		cout << "Введите число: ";
@@ -111,13 +111,13 @@ int main()
 		else {
 			cout << "Так как число не парное, то результат будет: " << num / 2;
 		}
-	}*/
+	}
 
-	/*{
+	{
 		cout << "\nSeventh Task\n";
 		cout << "Добро пожаловать в калькулятор\n";
 		double num1, num2;
-		int choice,choicenum,exit;
+		int choice, choicenum, exit;
 		while (true) {
 			choice = 0;
 			choicenum = 0;
@@ -172,9 +172,9 @@ int main()
 				break;
 			}
 		}
-	}*/
+	}
 
-	/*{
+	{
 		cout << "\nEighth Task\n";
 		double num;
 		int degree;
@@ -194,8 +194,20 @@ int main()
 		else {
 			cout << "Эта степень не в заданном диапазоне";
 		}
-	}*/
+	}
 
-	
+	{
+		cout << "\nBonus Task\n";
+		char backgroundcolor, textcolor;
+		cout << "Введите цвет фона заднего (0-черный,1-синий,2-зеленый,3-голубой,4-красный,5-фиолетовый,6-желтый,7-белый): ";
+		cin >> backgroundcolor;
+		cout << "Введите цвет текста (0-черный,1-синий,2-зеленый,3-голубой,4-красный,5-фиолетовый,6-желтый,7-белый): ";
+		cin >> textcolor;
+		string color = "color ";
+		color += backgroundcolor;
+		color += textcolor;
+		system(color.c_str());
+		cout << "Вот ваш цвет, опробуйте его\n";
+	}
 }
 
