@@ -174,9 +174,28 @@ int main()
 		}
 	}*/
 
-	{
+	/*{
 		cout << "\nEighth Task\n";
+		double num;
+		int degree;
+		double result = 1.0;
+		cout << "Введите число, которое хотите возвести в степень: ";
+		cin >> num;
+		cout << "Введите степень от 0 до 7 включительно, в которую хотите возвести число: ";
+		cin >> degree;
+		if (degree >= 0 && degree <= 7) {
+			if (degree != 0) {
+				for (int i = 1; i <= degree; i++) {
+					result *= num;
+				}
+			}
+			cout << num << " в " << degree << " степени = " << result << '\n';
+		}
+		else {
+			cout << "Эта степень не в заданном диапазоне";
+		}
+	}*/
 
-	}
+	
 }
 
