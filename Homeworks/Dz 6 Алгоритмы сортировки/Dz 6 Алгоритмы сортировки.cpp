@@ -23,7 +23,7 @@ int main()
 		arr[j + 1] = temp;
 	}*/
 
-	/* {
+	{
 		cout << "\nFirst Task\n";
 		const int size = 5;
 		long long mobilephones[size] = { 3801234567,3705869854,3698745126,1522356587,1321254787 };
@@ -98,9 +98,9 @@ int main()
 				cout << "До свидания\n"; break;
 			}
 		}
-	}*/
+	}
 
-	/* {
+	{
 		cout << "\nSecond Task\n";
 		const int size = 8;
 		int max = 500, min = 0, changes = 1;
@@ -126,7 +126,7 @@ int main()
 		for (int num : masiv) {
 			cout << num << ' ';
 		}
-	}*/
+	}
 
 	{
 		cout << "\nThird Task\n";
@@ -144,6 +144,7 @@ int main()
 				}
 			}
 			if (maxoladindex == 0) {
+				start += 1;
 				continue;
 			}
 			int placestart = maxoladindex;
@@ -183,7 +184,8 @@ int main()
 					maxoladindex = i;
 				}
 			}
-			if (maxoladindex == size - 1) {
+			if (maxoladindex == stop - 1) {
+				stop -= 1;
 				continue;
 			}
 			int placestart = 0;
