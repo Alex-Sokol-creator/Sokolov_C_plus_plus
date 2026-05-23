@@ -132,9 +132,9 @@ int main()
 		cout << "\nThird Task\n";
 		const int size = 10;
 		int oladushki[size] = { 4,67,76,12,345,6,7,89,90,23 };
-		int maxolad,maxoladindex;
-		int stop = 0, start = 0;
-		while (stop != 10) {
+		int maxolad, maxoladindex;
+		int stop = size, start = 0;
+		/*while ((stop - start) != 1) {
 			maxolad = oladushki[start];
 			maxoladindex = start;
 			for (int i = start; i < size; i++) {
@@ -143,7 +143,74 @@ int main()
 					maxoladindex = i;
 				}
 			}
+			if (maxoladindex == 0) {
+				continue;
+			}
+			int placestart = maxoladindex;
+			int placeend = size-1;
+			//for (int i = maxoladindex; i < size-maxoladindex-1; i++) {
+			//	int temp = oladushki[size - place];
+			//	oladushki[size - place] = oladushki[i];
+			//	oladushki[i] = temp;
+			//	place += 1;
+			//}
 
+			while (placestart < placeend) {
+				int temp = oladushki[placeend];
+				oladushki[placeend] = oladushki[placestart];
+				oladushki[placestart] = temp;
+				placestart += 1;
+				placeend -= 1;
+			}
+			int startback = start;
+			placeend = size - 1;
+			while (startback < placeend) {
+				int temp = oladushki[startback];
+				oladushki[startback] = oladushki[placeend];
+				oladushki[placeend] = temp;
+				startback += 1;
+				placeend -= 1;
+			}
+			start += 1;
+		}*/
+
+		while (stop > 1) {
+			maxolad = oladushki[0];
+			maxoladindex = 0;
+			for (int i = 1; i < stop; i++) {
+				if (maxolad < oladushki[i]) {
+					maxolad = oladushki[i];
+					maxoladindex = i;
+				}
+			}
+			if (maxoladindex == size - 1) {
+				continue;
+			}
+			int placestart = 0;
+			int placeend = maxoladindex;
+
+			while (placestart < placeend) {
+				int temp = oladushki[placestart];
+				oladushki[placestart] = oladushki[placeend];
+				oladushki[placeend] = temp;
+				placestart += 1;
+				placeend -= 1;
+			}
+			int startback = 0;
+			placeend = stop - 1;
+			while (startback < placeend) {
+				int temp = oladushki[startback];
+				oladushki[startback] = oladushki[placeend];
+				oladushki[placeend] = temp;
+				startback += 1;
+				placeend -= 1;
+			}
+			stop -= 1;
+		}
+
+		cout << "Оладушки отсортированны, вот они по возрастанию радиусов снизу: \n";
+		for (int olad : oladushki) {
+			cout << olad << '\n';
 		}
 	}
 }
