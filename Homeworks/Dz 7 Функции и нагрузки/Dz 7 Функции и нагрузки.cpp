@@ -6,6 +6,8 @@ using namespace std;
 
 const int size2 = 3;
 
+// Task 1
+
 void matrixsort(int matrix[][size2], int size) {
 	cout << "Происходит сортировка массива\n";
 	for (int i = 0; i < size; i++) {
@@ -179,6 +181,8 @@ void matrixinputdata(char matrix[][size2], int size) {
 }
 
 
+// Task 2
+
 int SecondTask(int num1, int num2, int devider = 1, int deviderresult = 1) {
 	int minnum;
 	if (num1 > num2) {
@@ -197,6 +201,66 @@ int SecondTask(int num1, int num2, int devider = 1, int deviderresult = 1) {
 
 	return SecondTask(num1, num2, devider += 1, deviderresult);
 }
+
+
+
+// Task 3
+
+int GameCode(int number[4], int size, int tries = 0, int cows = 0, int bulls = 0, int input = 0) {
+	cows = 0;
+	bulls = 0;
+	tries += 1;
+	int userdata[4] = {};
+	for (int i = 0; i < size; i++) {
+		cout << "Введите " << i + 1 << " предпологаемое число: ";
+		cin >> input;
+		userdata[i] = input;
+	}
+	int usercopy[4] = {};
+	int numbercopy[4] = {};
+	for (int i = 0; i < size; i++) {
+		usercopy[i] = userdata[i];
+		numbercopy[i] = number[i];
+	}
+	for (int i = 0; i < size; i++) {;
+		if (usercopy[i] == numbercopy[i]) {
+			cows += 1;
+			usercopy[i] = 10;
+			numbercopy[i] = 10;
+		}
+	}
+	if (cows == 4) {
+		return tries;
+	}
+	for (int i = 0; i < size; i++) {
+		if (usercopy[i] == 10) {
+			continue;
+		}
+		for (int j = 0; j < size; j++) {
+			if (usercopy[i] == numbercopy[j] && (i != j)) {
+				bulls += 1;
+				numbercopy[j] = 10;
+				break;
+			}
+		}
+	}
+	cout << "У вас " << bulls << " бык. и " << cows << " коров.\n";
+	return GameCode(number, size, tries, cows, bulls, input);
+}
+
+int Bulls_Cows_Start(int arr[4], int size) {
+	int min = 0,max = 9;
+	for (int i = 0; i < size; i++) {
+		arr[i] = rand() % (max - min + 1) + min;
+	}
+	cout << "Программа загадала 4-х значное число, попробуйте его угадать\n";
+	for (int i = 0; i < size; i++) {
+		cout << arr[i] << ' ';
+	}
+	cout << '\n';
+	return GameCode(arr, size);
+}
+
 int main()
 {
 	SetConsoleCP(1251);
@@ -219,5 +283,14 @@ int main()
 		int number1 = 146, number2 = 264;
 		cout << "Идет поиск НОД для 2 чисел\n";
 		cout << "НОД для этих 2 чисел будет равно: " << SecondTask(number1, number2) << '\n';
+	}
+
+	{
+		cout << "\nThird Task\n";
+		const int size = 4;
+		int number[size] = {};
+		int result = Bulls_Cows_Start(number, size);
+		cout << "Ура, вы угадали число!\n";
+		cout << "Вы потратили " << result << " попыток";
 	}
 }
