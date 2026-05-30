@@ -137,27 +137,66 @@ void matrixshow(T matrix[][size2], int size) {
 	matrixekstremums(matrix, size);
 }
 
-template <typename T>
+/*template <typename T>
 void matrixinputdata(T matrix[][size2], int size) {
+	cout << '\n';
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			matrix[i][j] = T(rand() % 100);
 		}
 	}
 	matrixshow(matrix, size);
-}
+}*/
 
-void matrixinputdata(char matrix[][size2], int size) {
-	int num = 0;
+void matrixinputdata(int matrix[][size2], int size) {
+	cout << '\n';
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			matrix[i][j] = num;
-			num++;
+			matrix[i][j] = rand() % 100;
 		}
 	}
 	matrixshow(matrix, size);
 }
 
+void matrixinputdata(double matrix[][size2], int size) {
+	cout << '\n';
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			matrix[i][j] = rand() % 100 / 2.0;
+		}
+	}
+	matrixshow(matrix, size);
+}
+
+void matrixinputdata(char matrix[][size2], int size) {
+	cout << '\n';
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			matrix[i][j] = 'a' + (rand() % 26);
+		}
+	}
+	matrixshow(matrix, size);
+}
+
+
+int SecondTask(int num1, int num2, int devider = 1, int deviderresult = 1) {
+	int minnum;
+	if (num1 > num2) {
+		minnum = num2;
+	}
+	else {
+		minnum = num1;
+	}
+
+	if ((num1 % devider == 0) && (num2 % devider == 0)) {
+		deviderresult = devider;
+	}
+	if (devider == minnum) {
+		return deviderresult;
+	}
+
+	return SecondTask(num1, num2, devider += 1, deviderresult);
+}
 int main()
 {
 	SetConsoleCP(1251);
@@ -173,5 +212,12 @@ int main()
 		matrixinputdata(masivint, size);
 		matrixinputdata(masivdouble, size);
 		matrixinputdata(masivchar, size);
+	}
+
+	{
+		cout << "\nSecond Task\n";
+		int number1 = 146, number2 = 264;
+		cout << "Идет поиск НОД для 2 чисел\n";
+		cout << "НОД для этих 2 чисел будет равно: " << SecondTask(number1, number2) << '\n';
 	}
 }
