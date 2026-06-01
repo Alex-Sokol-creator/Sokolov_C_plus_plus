@@ -53,6 +53,21 @@ int SecondTask(int arr[], int size, int choice) {
 	return -1;
 }
 
+long long ThirdTask(long long number) {
+	long long result = 0;
+	int degree = 1;
+	while (number > 0) {
+		int lastfigure = number % 10;
+		if (lastfigure != 1 && lastfigure != 0) {
+			return -1;
+		}
+		number = number / 10;
+		result += (lastfigure * degree);
+		degree *= 2;
+	}
+	return result;
+}
+
 int main()
 {
 	SetConsoleCP(1251);
@@ -87,6 +102,20 @@ int main()
 		}
 		else {
 			cout << "Элемент не был найден в массиве\n";
+		}
+	}
+
+	{
+		cout << "\nThird Task\n";
+		long long twomatrixnum;
+		cout << "Введите число в двоичном формате для преобразования в десятичный формат: ";
+		cin >> twomatrixnum;
+		long long result = ThirdTask(twomatrixnum);
+		if (result != -1) {
+			cout << "Ваше число в десятичном формате это: " << result;
+		}
+		else {
+			cout << "Это не двоичная запись числа\n";
 		}
 	}
 }
