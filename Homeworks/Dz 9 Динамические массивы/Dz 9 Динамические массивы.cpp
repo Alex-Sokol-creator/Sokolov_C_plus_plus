@@ -39,11 +39,12 @@ void PrintMasiv(T* masiv, int size) {
 
 template <typename T>
 void DeleteMemory(T* masiv) {
+    cout << "\nМассив удаляется из динамической памяти";
     delete[] masiv;
 }
 
 template <typename T>
-T* AddElement(T* masiv, int size,int element) {
+T* AddElement(T* masiv, int& size,T element) {
     T* temp = new T[size + 1];
     for (int i = 0; i < size; i++) {
         temp[i] = masiv[i];
@@ -56,25 +57,37 @@ T* AddElement(T* masiv, int size,int element) {
 }
 
 template <typename T>
-T* AddElementByIndex(T* masiv, int size,int index,T element) {
-    if (index < 0 || index >= size) {
-        return nullptr;
+T* AddElementByIndex(T* masiv, int& size,int index,T element) {
+    if (index < 0 || index > size) {
+        cout << "К сожалению, такого индекса нет в массиве\n";
+        return masiv;
     }
-    masiv[index] = element;
+    T* temp = new T[size + 1];
+    for (int i = 0; i < index; i++) {
+        temp[i] = masiv[i];
+    }
+    temp[index] = element;
+    for (int i = index; i < size; i++) {
+        temp[i + 1] = masiv[i];
+    }
+    size++;
+    delete[] masiv;
+    masiv = temp;
     return masiv;
 }
 
 template <typename T>
-T* DeleteElementByIndex(T* masiv, int size,int index) {
+T* DeleteElementByIndex(T* masiv, int& size,int index) {
     if (index < 0 || index >= size) {
-        return nullptr;
+        cout << "К сожалению, такого индекса нет в массиве\n";
+        return masiv;
     }
     T* temp = new T[size - 1];
     for (int i = 0; i < index; i++) {
         temp[i] = masiv[i];
     }
     for (int i = index + 1; i < size; i++) {
-        temp[i] = masiv[i];
+        temp[i - 1] = masiv[i];
     }
     size--;
     delete[] masiv;
@@ -90,7 +103,26 @@ int main()
 
     {
         cout << "\nFirst Task\n";
-
+        int size = 6;
+        int num,index;
+        int* masiv = GiveMemory<int>(size);
+        Initialization(masiv, size);
+        PrintMasiv(masiv, size);
+        cout << "\nКакое число вы хотите добавить в конец массива?: ";
+        cin >> num;
+        masiv = AddElement(masiv, size, num);
+        PrintMasiv(masiv, size);
+        cout << "\nВ какой индекс вставить ваше число?: ";
+        cin >> index;
+        cout << "Напишите число, которое хотите вставить: ";
+        cin >> num;
+        masiv = AddElementByIndex(masiv, size, index, num);
+        PrintMasiv(masiv, size);
+        cout << "\nКакой индекс у элемента, который вы хотите удалить?: ";
+        cin >> index;
+        masiv = DeleteElementByIndex(masiv, size, index);
+        PrintMasiv(masiv,size);
+        DeleteMemory(masiv);
     }
 }
 
