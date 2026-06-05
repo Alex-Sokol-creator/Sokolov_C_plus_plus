@@ -124,5 +124,10 @@ int main()
         PrintMasiv(masiv,size);
         DeleteMemory(masiv);
     }
+
+    {
+        cout << "\nSecond Task\n";
+
+    }
 }
 
