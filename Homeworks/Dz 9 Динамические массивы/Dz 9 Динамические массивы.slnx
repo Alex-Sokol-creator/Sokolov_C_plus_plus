@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Lesson 10 Ссылки.vcxproj" Id="5d3e2719-d8a4-4dab-b10b-b13740bfad66" />
+  <Project Path="Dz 9 Динамические массивы.vcxproj" />
 </Solution>
