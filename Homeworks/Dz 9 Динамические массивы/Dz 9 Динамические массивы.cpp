@@ -140,6 +140,11 @@ T* DeleteSimpleNumbers(T* masiv, int& size) {
 	return newmasiv;
 }
 
+template <typename T>
+void SortMasiv(T* masiv, int size) {
+
+}
+
 int main()
 {
 	SetConsoleCP(1251);
@@ -177,6 +182,15 @@ int main()
 		Initialization(masiv, size);
 		int* result = DeleteSimpleNumbers(masiv, size);
 		PrintMasiv(result, size);
+	}
+
+	{
+		cout << "\nThird Task\n";
+		const int size = 6;
+		int masiv[size];
+		Initialization(masiv, size);
+		int* ptr = &masiv;
+
 	}
 }
 
