@@ -25,7 +25,7 @@ T* GiveMemory(int size) {
 template <typename T>
 void Initialization(T* masiv, int size) {
 	for (int i = 0; i < size; i++) {
-		masiv[i] = rand();
+		masiv[i] = rand() % 100;
 	}
 }
 
@@ -174,6 +174,7 @@ int main()
 		cout << "\nSecond Task\n";
 		int size = 14;
 		int* masiv = new int[size];
+		Initialization(masiv, size);
 		int* result = DeleteSimpleNumbers(masiv, size);
 		PrintMasiv(result, size);
 	}
