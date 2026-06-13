@@ -115,6 +115,7 @@ int main()
 		cin >> index;
 		stroka = DeleteSymbolByIndex(stroka, size, index);
 		PrintMasiv(stroka, size);
+		delete[] stroka;
 
 	}
 
@@ -131,6 +132,7 @@ int main()
 		cin >> symbol;
 		stroka = DeleteSymbol(stroka, size, symbol);
 		PrintMasiv(stroka, size);
+		delete[] stroka;
 
 	}
 
@@ -150,6 +152,7 @@ int main()
 		cin >> index;
 		stroka = AddElementByIndex(stroka, size, index, symbol);
 		PrintMasiv(stroka, size);
+		delete[] stroka;
 
 	}
 
@@ -167,6 +170,7 @@ int main()
 		PrintMasiv(stroka, size);
 		stroka = ChangingSymbol(stroka, size);
 		PrintMasiv(stroka, size);
+		delete[] stroka;
 
 	}
 
@@ -185,5 +189,6 @@ int main()
 		cin >> symbol;
 		int result = SearchingSymbol(stroka, size, symbol);
 		cout << "В вашей строке символ встречается вот столько раз: " << result;
+		delete[] stroka;
 	}
 }
