@@ -86,14 +86,25 @@ char* ChangingSymbol(char stroka[], int size) {
 	return stroka;
 }
 
+int SearchingSymbol(char stroka[], int size, char symbol) {
+	cout << "Идет расчет количества символа в вашей строке...\n";
+	int times = 0;
+	for (int i = 0; i < size;i++) {
+		if (stroka[i] == symbol) {
+			times++;
+		}
+	}
+	return times;
+}
+
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
-    {
-		/*
-        cout << "\nFirst Task\n";
+	{
+
+		cout << "\nFirst Task\n";
 		char strokabeta[] = "Hello, world!";
 		int size = strlen(strokabeta);
 		char* stroka = new char[size + 1];
@@ -104,11 +115,11 @@ int main()
 		cin >> index;
 		stroka = DeleteSymbolByIndex(stroka, size, index);
 		PrintMasiv(stroka, size);
-		*/
-    }
+
+	}
 
 	{
-		/*
+
 		cout << "\nSecond Task\n";
 		char strokabeta[] = "Hello, world!";
 		int size = strlen(strokabeta);
@@ -120,11 +131,11 @@ int main()
 		cin >> symbol;
 		stroka = DeleteSymbol(stroka, size, symbol);
 		PrintMasiv(stroka, size);
-		*/
+
 	}
 
 	{
-		/*
+
 		cout << "\nThird Task\n";
 		char strokabeta[] = "Hello, world!";
 		int size = strlen(strokabeta);
@@ -137,12 +148,13 @@ int main()
 		int index;
 		cout << "На какую позицию (индекс) вы хотите его добавить?: ";
 		cin >> index;
-		stroka = AddElementByIndex(stroka,size,index,symbol);
+		stroka = AddElementByIndex(stroka, size, index, symbol);
 		PrintMasiv(stroka, size);
-		*/
+
 	}
 
 	{
+
 		cout << "\nFourth Task\n";
 		const int buffer_size = 256;
 		char buffer_enter[buffer_size];
@@ -155,5 +167,23 @@ int main()
 		PrintMasiv(stroka, size);
 		stroka = ChangingSymbol(stroka, size);
 		PrintMasiv(stroka, size);
+
+	}
+
+	{
+		cout << "\nFifth Task\n";
+		const int buffer_size = 256;
+		char buffer_enter[buffer_size];
+		cout << "Введите вашу строку: ";
+		cin.getline(buffer_enter, buffer_size);
+		int size = strlen(buffer_enter);
+		char* stroka = new char[size + 1];
+		strcpy_s(stroka, size + 1, buffer_enter);
+		PrintMasiv(stroka, size);
+		char symbol;
+		cout << "Введите символ, и программа посчитает его количество в вашей строке: ";
+		cin >> symbol;
+		int result = SearchingSymbol(stroka, size, symbol);
+		cout << "В вашей строке символ встречается вот столько раз: " << result;
 	}
 }
