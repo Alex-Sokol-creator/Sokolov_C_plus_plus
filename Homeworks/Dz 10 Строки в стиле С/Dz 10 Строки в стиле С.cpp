@@ -163,6 +163,7 @@ int main()
 		char buffer_enter[buffer_size];
 
 		cout << "Введите вашу строку: ";
+		cin.ignore();
 		cin.getline(buffer_enter, buffer_size);
 		int size = strlen(buffer_enter);
 		char* stroka = new char[size + 1];
@@ -179,6 +180,7 @@ int main()
 		const int buffer_size = 256;
 		char buffer_enter[buffer_size];
 		cout << "Введите вашу строку: ";
+		cin.ignore();
 		cin.getline(buffer_enter, buffer_size);
 		int size = strlen(buffer_enter);
 		char* stroka = new char[size + 1];
