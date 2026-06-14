@@ -57,11 +57,23 @@ int mystrcmp(const char* str1, const char* str2) {
 }
 
 int StringToNumber(char* str) {
+    /*
     int result = 0;
     for (int i = 0; str[i] != '\0'; i++) {
         result += str[i];
     }
     return result;
+    */
+
+    int result = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] >= '0' && str[i] <= '9') {
+            result = result * 10 + (str[i] - '0');
+        }
+        else {
+            break;
+        }
+    }
 }
 
 int main()
