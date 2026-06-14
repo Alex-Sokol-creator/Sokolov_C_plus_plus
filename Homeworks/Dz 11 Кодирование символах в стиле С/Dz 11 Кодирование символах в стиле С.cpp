@@ -56,6 +56,14 @@ int mystrcmp(const char* str1, const char* str2) {
     }
 }
 
+int StringToNumber(char* str) {
+    int result = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        result += str[i];
+    }
+    return result;
+}
+
 int main()
 {
     SetConsoleCP(1251);
@@ -103,7 +111,15 @@ int main()
     }
 
     {
-
+        const int buffer_size = 256;
+        char buffer_enter[buffer_size];
+        cout << "Введите вашу строку: ";
+        cin.getline(buffer_enter, buffer_size);
+        int size1 = strlen(buffer_enter);
+        char* stroka = new char[size1 + 1];
+        strcpy_s(stroka, size1 + 1, buffer_enter);
+        int result = StringToNumber(stroka);
+        cout << "После конвертации вашей строки в число, получилось: " << result << '\n';
     }
 }
 
