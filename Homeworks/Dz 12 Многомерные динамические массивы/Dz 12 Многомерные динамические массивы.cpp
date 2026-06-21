@@ -341,7 +341,7 @@ void CountSize(int rows, int cols, int& size) {
 	}
 }
 
-void CountSizeUnique(int** A, int** B, int** C, int rows_a, int cols_a, int rows_b, int cols_b, int rows_c, int cols_c, int& size) {
+int CountSizeUnique(int* all_elements, int size) {
 	/*int place_a = 0;
 	for (int i = 0; i < rows_a; i++) {
 		for (int j = 0; j < cols_a; j++) {
@@ -350,7 +350,22 @@ void CountSizeUnique(int** A, int** B, int** C, int rows_a, int cols_a, int rows
 		place_a++;
 	}*/
 
+	int unique_count = 0;
 
+	for (int i = 0; i < size; i++) {
+		bool is_duplicate = false;
+		for (int j = 0; j < i; j++) {
+			if (all_elements[i] == all_elements[j]) {
+				is_duplicate = true;
+				break;
+			}
+		}
+		if (is_duplicate != true) {
+			unique_count++;
+		}
+	}
+
+	return unique_count;
 }
 
 int FillingMasiv(int** masiv, int rows, int cols, int* destination, int place) {
@@ -362,8 +377,6 @@ int FillingMasiv(int** masiv, int rows, int cols, int* destination, int place) {
 	}
 	return place;
 }
-
-void
 
 int main()
 {
@@ -566,15 +579,16 @@ int main()
 			cout << "\n";
 		}
 
-		int uniques = 0, everything = 0, place = 0;
-		CountEverything(rows_a, cols_a, everything);
-		CountEverything(rows_b, cols_b, everything);
-		CountEverything(rows_c, cols_c, everything);
+		int uniques_count = 0, everything = 0, place = 0;
+		CountSize(rows_a, cols_a, everything);
+		CountSize(rows_b, cols_b, everything);
+		CountSize(rows_c, cols_c, everything);
 		int* all_elements = new int[everything];
 		place = FillingMasiv(A, rows_a, cols_a, all_elements, place);
 		place = FillingMasiv(B, rows_b, cols_b, all_elements, place);
 		place = FillingMasiv(C, rows_c, cols_c, all_elements, place);
-
+		uniques_count = CountSizeUnique(all_elements, everything);
+		int* uniques = new int[uniques_count];
 
 	}
 }
