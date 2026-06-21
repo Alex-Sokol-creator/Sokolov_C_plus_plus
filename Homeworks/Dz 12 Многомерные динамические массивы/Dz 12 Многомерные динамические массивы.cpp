@@ -206,7 +206,7 @@ T** Transposition(T** masiv, int& rows, int& cols) {
 	cout << "Идет транспонирование массива...\n";
 	int new_rows = cols;
 	int new_cols = rows;
-	T** new_masiv = new T* [new_rows];
+	T** new_masiv = new T * [new_rows];
 	for (int i = 0; i < new_rows; i++) {
 		new_masiv[i] = new T[new_cols];
 	}
@@ -225,23 +225,128 @@ T** Transposition(T** masiv, int& rows, int& cols) {
 	return new_masiv;
 }
 
+template <typename T>
+void Telephone(T***& masiv, const int rows = 2, int& cols = 0) {
+	cout << "Добро пожаловать в телефонную книгу\n";
+	int exit = 0;
+	while (exit != 1) {
+		int action = 0;
+		while (action != 1 && action != 2 && action != 3) {
+			cout << "Что вы хотите сделать? (1 - поиск контакта, 2 - записать новый контакт, 3 - вывести телефонную книгу): ";
+			cin >> action;
+		}
+		if (action == 1) {
+			int search_choice = 0;
+			while (search_choice != 1 && search_choice != 2) {
+				cout << "Вы хотите искать по имени или по номеру телефона?(выбор соответственный): ";
+				cin >> search_choice;
+			}
+			if (search_choice == 1) {
+				cout << "Введите имя контакта: ";
+				char buffer[1000];
+				cin.ignore();
+				cin.getline(buffer, 1000);
+				int size = strlen(buffer) + 1;
+				char* name = new char[size];
+				strcpy_s(name, size, buffer);
+				int result = 0;
+				for (int i = 0; i < cols; i++) {
+					if (masiv[0][i] != nullptr && strcmp(name, masiv[0][i]) == 0) {
+						cout << "Контакт " << name << " найден под номером " << i + 1 << " , у него номер " << masiv[1][i] << '\n';
+						result = 1;
+						break;
+					}
+				}
+				if (result == 0) {
+					cout << "К сожалению, контакт " << name << " отсутствует\n";
+				}
+			}
+			else {
+				cout << "Введите номер контакта: ";
+				char buffer[50];
+				cin.ignore();
+				cin.getline(buffer, 50);
+				int size = strlen(buffer) + 1;
+				char* number = new char[size];
+				strcpy_s(number, size, buffer);
+				int result = 0;
+				for (int i = 0; i < cols; i++) {
+					if (masiv[1][i] != nullptr && strcmp(number, masiv[1][i]) == 0) {
+						cout << "Контакт с телефоном " << number << " найден под номером " << i + 1 
+							<< " , у него имя " << masiv[0][i] << '\n';
+						result = 1;
+						break;
+					}
+				}
+				if (result == 0) {
+					cout << "К сожалению, контакт с телефоном " << number << " отсутствует\n";
+				}
+			}
+		}
+		else if (action == 2) {
+			T*** masiv_new = new T * *[rows];
+			for (int i = 0; i < rows; i++) {
+				masiv_new[i] = new T* [cols + 1];
+			}
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+					masiv_new[i][j] = masiv[i][j];
+				}
+				masiv_new[i][cols] = nullptr;
+			}
+			if (masiv != nullptr) {
+				for (int i = 0; i < rows; i++) {
+					delete[] masiv[i];
+				}
+				delete[] masiv;
+			}
+			masiv = masiv_new;
+			cols++;
+			cout << "Введите имя контакта: ";
+			char buffer[1000];
+			cin.ignore();
+			cin.getline(buffer, 1000);
+			int size = strlen(buffer) + 1;
+			char* name = new char[size];
+			strcpy_s(name, size, buffer);
+			masiv[0][cols - 1] = name;
+			cout << "Введите номер контакта: ";
+			cin.getline(buffer, 1000);
+			size = strlen(buffer) + 1;
+			char* number = new char[size];
+			strcpy_s(number, size, buffer);
+			masiv[1][cols - 1] = number;
+			cout << "Контакт с именем " << name << " и телефоном " << number << " записан";
+		}
+		else {
+			cout << "Вот ваша телефонная книга: \n";
+			for (int i = 0; i < cols; i++) {
+				for (int j = 0; j < rows; j++) {
+					cout << masiv[j][i] << " ";
+				}
+				cout << "\n";
+			}
+		}
+		cout << "\nХотите завершить программу?(1 - да, любое число - нет): ";
+		cin >> exit;
+	}
+	cout << "До свидания!\n";
+}
+
+void CountEverything(int rows, int cols, int& everything) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			everything++;
+		}
+	}
+}
+
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	srand(time(NULL));
-	/*
-	int** arr_3x5 = new int* [size_x];
-	for (int i = 0; i < size_x; i++) {
-		arr_3x5[i] = new int[size_y];
-		for (int j = 0; j < size_y; j++) {
-			arr_3x5[i][j] = rand() % 10;
-			cout << arr_3x5[i][j] << ' ';
-		}
-		cout << '\n';
-	}
-	*/
-
+	
 	{
 		cout << "\nFirst Task\n";
 		int rows = 3, cols = 3;
@@ -343,8 +448,105 @@ int main()
 	{
 		cout << "\nFifth Task\n";
 		const int rows = 2;
-		int cols;
+		int cols = 0;
+		char*** phoneBook = new char** [rows];
+		for (int i = 0; i < rows; i++) {
+			phoneBook[i] = nullptr;
+		}
+		Telephone(phoneBook, rows, cols);
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				delete[] phoneBook[i][j];
+			}
+			delete[] phoneBook[i];
+		}
+		delete[] phoneBook;
+	}
 
+	{
+		cout << "\nSixth Task\n";
+		const int count = 5;
+		char** surnames = new char* [count];
+		cout << "Введите 5 фамилий студентов:\n";
+		cin.ignore();
+		for (int i = 0; i < count; i++) {
+			char buffer[50];
+			cout << i + 1 << " студент: ";
+			cin.getline(buffer, 50);
+			int size = strlen(buffer) + 1;
+			surnames[i] = new char[size];
+			strcpy_s(surnames[i], size, buffer);
+		}
+		for (int i = 0; i < count - 1; i++) {
+			for (int j = 0; j < count - i - 1; j++) {
+				if (strlen(surnames[j]) > strlen(surnames[j + 1])) {
+					char* temp = surnames[j + 1];
+					surnames[j + 1] = surnames[j];
+					surnames[j] = temp;
+				}
+			}
+		}
+		cout << "\nФамилии студентов по возрастанию:\n";
+		for (int i = 0; i < count; i++) {
+			cout << surnames[i] << '\n';
+		}
+		for (int i = 0; i < count; i++) {
+			delete[] surnames[i];
+		}
+		delete[] surnames;
+	}
+
+	{
+		cout << "\nSeventh Task\n";
+		int rows_a, rows_b, rows_c, cols_a, cols_b, cols_c;
+		cout << "Введите количество строк для массива А: ";
+		cin >> rows_a;
+		cout << "Введите количество колонок для массива А: ";
+		cin >> cols_a;
+		int** A = new int* [rows_a];
+		cout << "Вот массив А: \n";
+		for (int i = 0; i < rows_a; i++) {
+			A[i] = new int[cols_a];
+			for (int j = 0; j < cols_a; j++) {
+				A[i][j] = rand() % 41 - 20;
+				cout << A[i][j] << ' ';
+			}
+			cout << "\n";
+		}
+		cout << "Введите количество строк для массива B: ";
+		cin >> rows_b;
+		cout << "Введите количество колонок для массива B: ";
+		cin >> cols_b;
+		int** B = new int* [rows_b];
+		cout << "Вот массив B: \n";
+		for (int i = 0; i < rows_b; i++) {
+			B[i] = new int[cols_b];
+			for (int j = 0; j < cols_b; j++) {
+				B[i][j] = rand() % 41 - 20;
+				cout << B[i][j] << ' ';
+			}
+			cout << "\n";
+		}
+		cout << "Введите количество строк для массива C: ";
+		cin >> rows_c;
+		cout << "Введите количество колонок для массива C: ";
+		cin >> cols_c;
+		int** C = new int* [rows_c];
+		cout << "Вот массив C: \n";
+		for (int i = 0; i < rows_c; i++) {
+			C[i] = new int[cols_c];
+			for (int j = 0; j < cols_c; j++) {
+				C[i][j] = rand() % 41 - 20;
+				cout << A[i][j] << ' ';
+			}
+			cout << "\n";
+		}
+
+		int uniques = 0, everything = 0;
+		CountEverything(rows_a, cols_a, everything);
+		CountEverything(rows_b, cols_b, everything);
+		CountEverything(rows_c, cols_c, everything);
+		int all_elements
 	}
 }
 
