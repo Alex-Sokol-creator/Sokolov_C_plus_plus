@@ -368,6 +368,80 @@ int CountSizeUnique(int* all_elements, int size) {
 	return unique_count;
 }
 
+int CountSizeAC(int** A, int rows_a, int cols_a, int** C, int rows_c, int cols_c) {
+	int ac_count = 0;
+	int* temp = new int[rows_a * cols_a];
+	for (int i = 0; i < rows_a; i++) {
+		for (int j = 0; j < cols_a; j++) {
+			int current_val = A[i][j];
+			bool found_in_C = false;
+			for (int r = 0; r < rows_c; r++) {
+				for (int c = 0; c < cols_c; c++) {
+					if (C[r][c] == current_val) {
+						found_in_C = true;
+						break;
+					}
+				}
+				if (found_in_C == true) {
+					break;
+				};
+			}
+			if (found_in_C == true) {
+				bool already_counted = false;
+				for (int k = 0; k < ac_count; k++) {
+					if (temp[k] == current_val) {
+						already_counted = true;
+						break;
+					}
+				}
+				if (already_counted == false) {
+					temp[ac_count] = current_val;
+					ac_count++;
+				}
+			}
+		}
+	}
+	delete[] temp;
+	return ac_count;
+}
+
+int CountSizeNegative(int* all_elements, int size) {
+	int negative_count = 0;
+	for (int i = 0; i < size; i++) {
+		if (all_elements[i] < 0) {
+			bool already_counted = false;
+			for (int j = 0; j < i; j++) {
+				if (all_elements[i] == all_elements[j]) {
+					already_counted = true;
+					break;
+				}
+			}
+			if (already_counted == false) {
+				negative_count++;
+			}
+		}
+	}
+	return negative_count;
+}
+
+
+void FillingUnique(int* all_elements, int size,int* uniques) {
+	int place = 0;
+	for (int i = 0; i < size; i++) {
+		bool is_duplicate = false;
+		for (int j = 0; j < i; j++) {
+			if (all_elements[i] == all_elements[j]) {
+				is_duplicate = true;
+				break;
+			}
+		}
+		if (is_duplicate != true) {
+			uniques[place] = all_elements[i];
+			place++;
+		}
+	}
+}
+
 int FillingMasiv(int** masiv, int rows, int cols, int* destination, int place) {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
@@ -377,6 +451,58 @@ int FillingMasiv(int** masiv, int rows, int cols, int* destination, int place) {
 	}
 	return place;
 }
+
+void FillingAC(int** A, int rows_a, int cols_a, int** C, int rows_c, int cols_c, int* general) {
+	int ac_count = 0;
+	for (int i = 0; i < rows_a; i++) {
+		for (int j = 0; j < cols_a; j++) {
+			int current_val = A[i][j];
+			bool found_in_C = false;
+			for (int r = 0; r < rows_c; r++) {
+				for (int c = 0; c < cols_c; c++) {
+					if (C[r][c] == current_val) {
+						found_in_C = true;
+						break;
+					}
+				}
+				if (found_in_C == true) break;
+			}
+			if (found_in_C == true) {
+				bool already_counted = false;
+				for (int k = 0; k < ac_count; k++) {
+					if (general[k] == current_val) {
+						already_counted = true;
+						break;
+					}
+				}
+				if (already_counted == false) {
+					general[ac_count] = current_val;
+					ac_count++;
+				}
+			}
+		}
+	}
+}
+
+void FillingNegative(int* all_elements, int size, int* negatives) {
+	int place = 0;
+	for (int i = 0; i < size; i++) {
+		if (all_elements[i] < 0) {
+			bool already_counted = false;
+			for (int j = 0; j < i; j++) {
+				if (all_elements[i] == all_elements[j]) {
+					already_counted = true;
+					break;
+				}
+			}
+			if (already_counted == false) {
+				negatives[place] = all_elements[i];
+				place++;
+			}
+		}
+	}
+}
+
 
 int main()
 {
@@ -574,7 +700,7 @@ int main()
 			C[i] = new int[cols_c];
 			for (int j = 0; j < cols_c; j++) {
 				C[i][j] = rand() % 41 - 20;
-				cout << A[i][j] << ' ';
+				cout << C[i][j] << ' ';
 			}
 			cout << "\n";
 		}
@@ -589,7 +715,37 @@ int main()
 		place = FillingMasiv(C, rows_c, cols_c, all_elements, place);
 		uniques_count = CountSizeUnique(all_elements, everything);
 		int* uniques = new int[uniques_count];
+		FillingUnique(all_elements, everything,uniques);
+		int generalAC_count = CountSizeAC(A,rows_a,cols_a,C,rows_c,cols_c);
+		int* generalAC = new int[generalAC_count];
+		FillingAC(A, rows_a, cols_a, C, rows_c, cols_c, generalAC);
+		int negatives_count = CountSizeNegative(all_elements,everything);
+		int* negatives = new int[negatives_count];
+		FillingNegative(all_elements, everything, negatives);
 
+		cout << "Вот массив, который содержит все значения массивов А,В,С: \n";
+		for (int i = 0; i < everything; i++) {
+			cout << all_elements[i] << ' ';
+		}
+		cout << '\n';
+
+		cout << "Вот массив, который содержит уникальные значения массивов А,В,С: \n";
+		for (int i = 0; i < uniques_count; i++) {
+			cout << uniques[i] << ' ';
+		}
+		cout << '\n';
+
+		cout << "Вот массив, который содержит общие значения массивов А и С: \n";
+		for (int i = 0; i < generalAC_count; i++) {
+			cout << generalAC[i] << ' ';
+		}
+		cout << '\n';
+
+		cout << "Вот массив, который содержит негативные значения массивов А,В,С: \n";
+		for (int i = 0; i < negatives_count; i++) {
+			cout << negatives[i] << ' ';
+		}
+		cout << '\n';
 	}
 }
 
