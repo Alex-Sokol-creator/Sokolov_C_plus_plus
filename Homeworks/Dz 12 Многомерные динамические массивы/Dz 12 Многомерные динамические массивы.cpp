@@ -333,13 +333,37 @@ void Telephone(T***& masiv, const int rows = 2, int& cols = 0) {
 	cout << "До свидания!\n";
 }
 
-void CountEverything(int rows, int cols, int& everything) {
+void CountSize(int rows, int cols, int& size) {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			everything++;
+			size++;
 		}
 	}
 }
+
+void CountSizeUnique(int** A, int** B, int** C, int rows_a, int cols_a, int rows_b, int cols_b, int rows_c, int cols_c, int& size) {
+	/*int place_a = 0;
+	for (int i = 0; i < rows_a; i++) {
+		for (int j = 0; j < cols_a; j++) {
+			if (A[i][place_a] != B[i][j] && A[place_a][j] != C)
+		}
+		place_a++;
+	}*/
+
+
+}
+
+int FillingMasiv(int** masiv, int rows, int cols, int* destination, int place) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			destination[place] = masiv[i][j];
+			place++;
+		}
+	}
+	return place;
+}
+
+void
 
 int main()
 {
@@ -542,11 +566,16 @@ int main()
 			cout << "\n";
 		}
 
-		int uniques = 0, everything = 0;
+		int uniques = 0, everything = 0, place = 0;
 		CountEverything(rows_a, cols_a, everything);
 		CountEverything(rows_b, cols_b, everything);
 		CountEverything(rows_c, cols_c, everything);
-		int all_elements
+		int* all_elements = new int[everything];
+		place = FillingMasiv(A, rows_a, cols_a, all_elements, place);
+		place = FillingMasiv(B, rows_b, cols_b, all_elements, place);
+		place = FillingMasiv(C, rows_c, cols_c, all_elements, place);
+
+
 	}
 }
 
