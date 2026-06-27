@@ -154,6 +154,148 @@ void SearchAutoText(Automobile masiv[], int size, char search[], int choice) {
 	}
 }
 
+struct Book {
+	char name[60];
+	char author[60];
+	char vidavnitstvo[65];
+	char janr[25];
+};
+
+void DieBibliotek(Book books[], int size) {
+	cout << "\nДобро пожаловать в программу библиотека, что вы хотите сделать?\n";
+	while (true) {
+		int choice = 0;
+		while (choice < 1 || choice > 7) {
+			cout << "Выбор: 1 - редактировать книгу, 2 - печать всех книг, 3 - поиск книги за автором, 4 - поиск книги по названию, 5 - сортировать массив по названиям книг, 6 - сортировать массив за автором, 7 - сортировать массив за изданием\n";
+			cin >> choice;
+		}
+		switch (choice) {
+		case 1: {
+			int number;
+			cout << "Введите номер книги, которую хотите отредактировать: ";
+			cin >> number;
+			if (number < 1 || number > size) {
+				cout << "Такой книги к сожалению нет\n";
+				break;
+			}
+			else {
+				int index = number - 1;
+				cin.ignore();
+				cout << "Введите новое название " << index + 1 << " книги: ";
+				cin.getline(books[index].name, 60);
+				cout << "Введите нового автора " << index + 1 << " книги: ";
+				cin.getline(books[index].author, 60);
+				cout << "Введите новое издание " << index + 1 << " книги: ";
+				cin.getline(books[index].vidavnitstvo, 65);
+				cout << "Введите новый жанр " << index + 1 << " книги: ";
+				cin.getline(books[index].janr, 25);
+			}
+			break;
+		}
+		case 2: {
+			cout << "Вот все ваши книги:\n";
+			for (int i = 0; i < size; i++) {
+				cout << i + 1 << " книга: \n";
+				cout << "Название: " << books[i].name << '\n';
+				cout << "Автор: " << books[i].author << '\n';
+				cout << "Издание: " << books[i].vidavnitstvo << '\n';
+				cout << "Жанр: " << books[i].janr << '\n';
+			}
+			break;
+		}
+		case 3: {
+			int completed = 0;
+			char author[60];
+			cout << "Введите автора для поиска его книг: ";
+			cin.ignore();
+			cin.getline(author, 60);
+			for (int i = 0; i < size; i++) {
+				if (strcmp(books[i].author, author) == 0) {
+					cout << "Книга с таким автором была найдена, это " << books[i].name << '\n';
+					completed++;
+				}
+			}
+			if (completed == 0) {
+				cout << "Книга с таким автором не была найдена к сожалению\n";
+			}
+			break;
+		}
+		case 4: {
+			int completed = 0;
+			char name[60];
+			cout << "Введите название книги для ее поиска: ";
+			cin.ignore();
+			cin.getline(name, 60);
+			for (int i = 0; i < size; i++) {
+				if (strcmp(books[i].name, name) == 0) {
+					cout << "Книга с таким названием была найдена, это " << books[i].name << '\n';
+					completed++;
+				}
+			}
+			if (completed == 0) {
+				cout << "Книга с таким названием не была найдена к сожалению\n";
+			}
+			break;
+		}
+		case 5: {
+			for (int i = 0; i < size - 1; i++) {
+				for (int j = 0; j < size - i - 1; j++) {
+					if ((strcmp(books[j].name, books[j + 1].name) > 0)) {
+						Book temp = books[j];
+						books[j] = books[j + 1];
+						books[j + 1] = temp;
+					}
+				}
+			}
+			cout << "Массив отсортирован по названиям\n";
+			break;
+		}
+		case 6: {
+			for (int i = 0; i < size - 1; i++) {
+				for (int j = 0; j < size - i - 1; j++) {
+					if ((strcmp(books[j].author, books[j + 1].author) > 0)) {
+						Book temp = books[j];
+						books[j] = books[j + 1];
+						books[j + 1] = temp;
+					}
+				}
+			}
+			cout << "Массив отсортирован за авторами\n";
+			break;
+		}
+		case 7: {
+			for (int i = 0; i < size - 1; i++) {
+				for (int j = 0; j < size - i - 1; j++) {
+					if ((strcmp(books[j].vidavnitstvo, books[j + 1].vidavnitstvo) > 0)) {
+						Book temp = books[j];
+						books[j] = books[j + 1];
+						books[j + 1] = temp;
+					}
+				}
+			}
+			cout << "Массив отсортирован за авторами\n";
+			break;
+		}
+		}
+
+		cout << "Вы хотите выйти? (1 - да, любое число - нет): ";
+		int exit;
+		cin >> exit;
+		if (exit == 1) {
+			cout << "До свидания!\n";
+			break;
+		}
+	}
+}
+
+struct Mashina {
+	char color[30];
+	char model[30];
+	char number[30];
+};
+
+
+
 int main()
 {
 	SetConsoleCP(1251);
@@ -235,6 +377,24 @@ int main()
 			cin.getline(meaning, 100);
 			SearchAutoText(masiv, size, meaning, choice);
 		}
+	}
+
+	{
+		cout << "\nThird Task\n";
+		const int size = 10;
+		Book books[size] = {
+			{"Кобзарь", "Тарас Шевченко", "Веселка", "Поэзия"},
+			{"Мастер и Маргарита", "Михаил Булгаков", "Азбука", "Роман"},
+			{"1984", "Джордж Оруэлл", "АСТ", "Антиутопия"},
+			{"Гарри Поттер", "Джоан Роулинг", "Росмэн", "Фэнтези"},
+			{"Идиот", "Федор Достоевский", "Эксмо", "Классика"},
+			{"Маленький принц", "Антуан де Сент-Экзюпери", "Детская литература", "Сказка"},
+			{"Три товарища", "Эрих Мария Ремарк", "АСТ", "Роман"},
+			{"Тень сумерек", "Джордж Оруэлл", "Веселка", "Фантастика"},
+			{"Захар Беркут", "Иван Франко", "Просвита", "Повесть"},
+			{"Кайдашева семья", "Иван Нечуй-Левицкий", "Веселка", "Повесть"}
+		};
+		DieBibliotek(books, size);
 	}
 
 	{
