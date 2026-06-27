@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Lesson 16 Препроцессоры.vcxproj" Id="39b89fac-1e0a-4009-b59e-6851d12e6432" />
+  <Project Path="Lesson 17 Битовые операции.vcxproj" />
 </Solution>
