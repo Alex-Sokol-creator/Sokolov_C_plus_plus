@@ -291,10 +291,79 @@ void DieBibliotek(Book books[], int size) {
 struct Mashina {
 	char color[30];
 	char model[30];
-	char number[30];
+	char number[9];
 };
 
+void SetMashina(Mashina& car) {
+	cout << "Введите цвет машины: ";
+	cin.getline(car.color, 30);
+	cout << "Введите модель машины: ";
+	cin.getline(car.model, 30);
+	cout << "Введите номер машины: ";
+	cin.getline(car.number, 9);
+}
 
+void PrintMashina(Mashina& car) {
+	cout << "\nЦвет машины: " << car.color;
+	cout << "\nМодель машины: " << car.model;
+	cout << "\nНомер машины: " << car.number;
+}
+
+void ChangeMashina(Mashina cars[], int size) {
+	int number;
+	cout << "Введите номер машины, которую хотите отредактировать: ";
+	cin >> number;
+	if (number < 1 || number > size) {
+		cout << "Такой машины к сожалению нет\n";
+		return;
+	}
+	else {
+		int index = number - 1;
+		cin.ignore();
+		cout << "Введите новый цвет " << index + 1 << " машины: ";
+		cin.getline(cars[index].color, 30);
+		cout << "Введите новую модель " << index + 1 << " машины: ";
+		cin.getline(cars[index].model, 30);
+		cout << "Введите новый номер " << index + 1 << " машины: ";
+		cin.getline(cars[index].number, 9);
+	}
+}
+
+void PrintMashins(Mashina cars[], int size) {
+	cout << "Вот все машины:\n";
+	for (int i = 0; i < size; i++) {
+		cout << i + 1 << " машина: \n";
+		cout << "Цвет: " << cars[i].color << '\n';
+		cout << "Модель: " << cars[i].model << '\n';
+		cout << "Номер: " << cars[i].number << '\n';
+	}
+}
+
+void SearchMashina(Mashina cars[], int size) {
+	int completed = 0;
+	char number[9];
+	cout << "Введите номер машины для ее поиска: ";
+	cin.ignore();
+	cin.getline(number, 9);
+	for (int i = 0; i < size; i++) {
+		if (strcmp(cars[i].number, number) == 0) {
+			cout << "Машина с таким номером была найдена, ее модель это " << cars[i].model << '\n';
+			completed++;
+		}
+	}
+	if (completed == 0) {
+		cout << "Машина с таким номер к сожалению не была найдена\n";
+	}
+}
+
+struct Creature {
+	double speed;
+	char type[25];
+	char color[30];
+	double birdspeed;
+	bool animalspeed;
+	int iq;
+};
 
 int main()
 {
@@ -398,7 +467,68 @@ int main()
 	}
 
 	{
+		cout << "\nFourth Task\n";
+		const int size = 10;
+
+		Mashina cars[size] = {
+		{"Красный", "Audi A4", "12345"},
+		{"Черный", "BMW X5", "BOSSMAN"},
+		{"Белый", "Toyota Camry", "77777"},
+		{"Синий", "Ford Focus", "FOCUS99"},
+		{"Серый", "Mercedes E200", "55555"},
+		{"Желтый", "Porsche 911", "FASTCAR"},
+		{"Зеленый", "Skoda Octavia", "44321"},
+		{"Серебристый", "Honda Civic", "HONDA7"},
+		{"Оранжевый", "Nissan Leaf", "ECODRIVE"},
+		{"Коричневый", "Volvo XC90", "10101"}
+		};
+
+		int choice;
+		while (true) {
+			cout << "\nЧто вы хотите сделать?: \n";
+			cout << "1. Заполнить одну отдельную машину\n";
+			cout << "2. Печать одной машины\n";
+			cout << "3. Редактировать любую машину из 10\n";
+			cout << "4. Печать всех 10 машин\n";
+			cout << "5. Поиск машины по номеру\n";
+			cout << "0. Выход\n";
+			cout << "Выберите действие: ";
+
+			cin >> choice;
+
+			switch (choice) {
+			case 1: {
+				cin.ignore();
+				cout << "\nЗаполнение машины: \n";
+				SetMashina(cars[0]);
+				break;
+			}
+			case 2: {
+				cout << "\nПечать машины: \n";
+				PrintMashina(cars[0]);
+				break;
+			}
+			case 3: {
+				ChangeMashina(cars, size);
+				break;
+			}
+			case 4: {
+				PrintMashins(cars, size);
+				break;
+			}
+			case 5: {
+				SearchMashina(cars, size);
+				break;
+			}
+			}
+			if (choice == 0) {
+				break;
+			}
+		}
+		cout << "\nДо свидания!\n";
+	}
+
+	{
 
 	}
 }
-
