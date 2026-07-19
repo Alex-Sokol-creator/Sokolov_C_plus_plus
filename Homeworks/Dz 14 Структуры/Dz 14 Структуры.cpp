@@ -358,12 +358,560 @@ void SearchMashina(Mashina cars[], int size) {
 
 struct Creature {
 	double speed;
-	char type[25];
+	int type;
 	char color[30];
-	double birdspeed;
-	bool animalspeed;
-	int iq;
+	union {
+		double birdspeed;
+		bool animalpaw;
+		int iq;
+	};
 };
+
+void SetCreature(Creature& creature) {
+	cout << "\nЗаполнение существа\n";
+	creature.type = 0;
+	while (creature.type < 1 || creature.type > 3) {
+		cout << "Введите тип существа (1 - птица, 2 - животное, 3 - человек): ";
+		cin >> creature.type;
+	}
+	cout << "Введите скорость существа (км/час): ";
+	cin >> creature.speed;
+	if (creature.type == 3) {
+		cout << "Введите IQ человека: ";
+		cin >> creature.iq;
+	}
+	else if (creature.type == 2) {
+		int choice = 0;
+		while (choice != 1 && choice != 2) {
+			cout << "Животное парнокопытное? (1 - да, 2 - нет): ";
+			cin >> choice;
+		}
+		if (choice == 1) {
+			creature.animalpaw = true;
+		}
+		else {
+			creature.animalpaw = false;
+		}
+
+	}
+	else {
+		cout << "Введите скорость птицы: ";
+		cin >> creature.birdspeed;
+	}
+	cin.ignore();
+	cout << "Введите цвет существа: ";
+	cin.getline(creature.color, 30);
+}
+
+void PrintCreature(Creature creature, int i = 0) {
+	if (i == 0) {
+		cout << "Вот информация про сущность:\n";
+	}
+	if (creature.type == 1) {
+		cout << "Тип: Птица" << '\n';
+	}
+	else if (creature.type == 2) {
+		cout << "Тип: Животное" << '\n';
+	}
+	else {
+		cout << "Тип: Человек" << '\n';
+	}
+	cout << "Цвет: " << creature.color << '\n';
+	cout << "Скорость: " << creature.speed << " км/час" << '\n';
+	if (creature.type == 1) {
+		cout << "Скорость полета птицы: " << creature.birdspeed << '\n';
+	}
+	else if (creature.type == 2) {
+		cout << "Животное парнокопытное?: " << creature.animalpaw << '\n';
+	}
+	else {
+		cout << "IQ у человека: " << creature.iq << '\n';
+	}
+}
+
+void ChangeCreature(Creature creatures[], int size) {
+	int number;
+	cout << "Введите номер существа, которое хотите отредактировать: ";
+	cin >> number;
+	if (number < 1 || number > size) {
+		cout << "Такого существа к сожалению нет\n";
+		return;
+	}
+	else {
+		int index = number - 1;
+		SetCreature(creatures[index]);
+	}
+}
+
+void PrintCreatures(Creature creatures[], int size) {
+	cout << "Вот все cущества:\n";
+	for (int i = 0; i < size; i++) {
+		cout << i + 1 << " существо: \n";
+		PrintCreature(creatures[i], i + 1);
+	}
+}
+
+void SearchCreature(Creature creatures[], int size) {
+	int choice = 0;
+	while (choice < 1 || choice > 4) {
+		cout << "По какому параметру вы хотите искать существ? (1 - скорость, 2 - тип, 3 - цвет, 4 - уникальное качество): ";
+		cin >> choice;
+	}
+	switch (choice) {
+	case 1: {
+		int completed = 0;
+		double searchspeed;
+		cout << "Введите скорость: ";
+		cin >> searchspeed;
+		for (int i = 0; i < size; i++) {
+			if (creatures[i].speed == searchspeed) {
+				cout << "Существо с такой скоростью было найдено, у него индекс " << i << " и это ";
+				if (creatures[i].type == 1) {
+					cout << "птица" << '\n';
+				}
+				else if (creatures[i].type == 2) {
+					cout << "животное" << '\n';
+				}
+				else {
+					cout << "человек" << '\n';
+				}
+				completed++;
+			}
+		}
+		if (completed == 0) {
+			cout << "Существо с такой скоростью не было найдено к сожалению\n";
+		}
+		break;
+	}
+	case 2: {
+		int completed = 0;
+		int searchtype;
+		cout << "Введите тип (1 - птица, 2 - животное, 3 - человек): ";
+		cin >> searchtype;
+		for (int i = 0; i < size; i++) {
+			if (creatures[i].type == searchtype) {
+				cout << "Существо с таким типом было найдено, у него индекс " << i << " и это ";
+				if (creatures[i].type == 1) {
+					cout << "птица" << '\n';
+				}
+				else if (creatures[i].type == 2) {
+					cout << "животное" << '\n';
+				}
+				else {
+					cout << "человек" << '\n';
+				}
+				completed++;
+			}
+		}
+		if (completed == 0) {
+			cout << "Существо с таким типом не было найдено к сожалению\n";
+		}
+		break;
+	}
+	case 3: {
+		int completed = 0;
+		char searchcolor[30];
+		cin.ignore();
+		cout << "Введите цвет существа: ";
+		cin.getline(searchcolor,30);
+		for (int i = 0; i < size; i++) {
+			if (strcmp(creatures[i].color, searchcolor) == 0) {
+				cout << "Существо с таким цветом было найдено, у него индекс " << i << " и это ";
+				if (creatures[i].type == 1) {
+					cout << "птица" << '\n';
+				}
+				else if (creatures[i].type == 2) {
+					cout << "животное" << '\n';
+				}
+				else {
+					cout << "человек" << '\n';
+				}
+				completed++;
+			}
+		}
+		if (completed == 0) {
+			cout << "Существо с таким цветом не было найдено к сожалению\n";
+		}
+		break;
+	}
+	case 4: {
+		int completed = 0;
+		int searchtype = 0;
+		while (searchtype < 1 || searchtype > 3) {
+			cout << "Введите тип (1 - птица, 2 - животное, 3 - человек): ";
+			cin >> searchtype;
+		}
+		if (searchtype == 1) {
+			double searchbirdspeed;
+			cout << "Введите скорость птицы: ";
+			cin >> searchbirdspeed;
+			for (int i = 0; i < size; i++) {
+				if (creatures[i].type == 1 && creatures[i].birdspeed == searchbirdspeed) {
+					cout << "Птица с такой скоростью была найдена, и у нее индекс " << i << '\n';
+					completed++;
+				}
+			}
+		}
+		else if (searchtype == 2) {
+			int choice = 0;
+			while (choice != 1 && choice != 2) {
+				cout << "Введите, парнокопытное ли животное (1 - true, 2 - false): ";
+				cin >> choice;
+			}
+			if (choice == 1) {
+				for (int i = 0; i < size; i++) {
+					if (creatures[i].type == 2 && creatures[i].animalpaw == true) {
+						cout << "Парнокопытное животное есть, и у него индекс " << i << '\n';
+						completed++;
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < size; i++) {
+					if (creatures[i].type == 2 && creatures[i].animalpaw == false) {
+						cout << "Не парнокопытное животное есть, и у него индекс " << i << '\n';
+						completed++;
+					}
+				}
+			}
+		}
+		else {
+			int searchiq;
+			cout << "Введите IQ человека: ";
+			cin >> searchiq;
+			for (int i = 0; i < size; i++) {
+				if (creatures[i].type == 3 && creatures[i].iq == searchiq) {
+					cout << "Человек с таким IQ был найден, и у него индекс " << i << '\n';
+					completed++;
+				}
+			}
+		}
+		if (completed == 0) {
+			cout << "Существо с такой характеристикой не было найдено к сожалению\n";
+		}
+		break;
+	}
+	}
+}
+
+struct Student {
+	char surname[30];
+	char group[10];
+	int grades[5];
+};
+
+void AddStudent(Student students[], int size) {
+	cin.ignore();
+	int index = size - 1;
+	char surname_new[30], group_new[10];
+	cout << "Введите фамилию нового студента: ";
+	cin.getline(surname_new, 30);
+	strcpy_s(students[index].surname, surname_new);
+	cin.ignore();
+	cout << "Введите группу студента: ";
+	cin.getline(group_new, 10);
+	strcpy_s(students[index].group, group_new);
+	for (int i = 0; i < 5; i++) {
+		cout << "Введите " << i + 1 << " оценку студента: ";
+		cin >> students[index].grades[i];
+	}
+	cout << "Студент " << students[index].surname << " успешно записан";
+}
+
+void ChangeSizeStudent(Student*& students, int& size) {
+	int choice = 0;
+	while (choice != 1 && choice != 2) {
+		cout << "Что вы хотите сделать с массивом? (1 - добавить студента в конец, 2 - удалить конкретного студента): ";
+		cin >> choice;
+	}
+	if (choice == 1) {
+		Student* students_new = new Student[size + 1];
+		for (int i = 0; i < size; i++) {
+			strcpy_s(students_new[i].surname, students[i].surname);
+			strcpy_s(students_new[i].group, students[i].group);
+			for (int j = 0; j < 5; j++) {
+				students_new[i].grades[j] = students[i].grades[j];
+			}
+		}
+		AddStudent(students_new, size + 1);
+		delete[] students;
+		students = students_new;
+	}
+	else {
+		int position = 0;
+		while (position < 1 || position > size) {
+			cout << "Студента под каким номером вы хотите удалить?: ";
+			cin >> position;
+		}
+		int index = position - 1;
+		Student* students_new = new Student[size - 1];
+		for (int i = 0; i < index; i++) {
+			strcpy_s(students_new[i].surname, students[i].surname);
+			strcpy_s(students_new[i].group, students[i].group);
+			for (int j = 0; j < 5; j++) {
+				students_new[i].grades[j] = students[i].grades[j];
+			}
+		}
+		for (int i = index + 1; i < size; i++) {
+			strcpy_s(students_new[i - 1].surname, students[i].surname);
+			strcpy_s(students_new[i - 1].group, students[i].group);
+			for (int j = 0; j < 5; j++) {
+				students_new[i - 1].grades[j] = students[i].grades[j];
+			}
+		}
+		delete[] students;
+		students = students_new;
+	}
+}
+
+void PrintStudentsByGrades(Student students[], int size) {
+	cout << "\nСейчас будут выводиться отличники и двоечники\n";
+	cout << "Список отличников: \n";
+	for (int i = 0; i < size; i++) {
+		int count_of_good = 0;
+		for (int j = 0; j < 5; j++) {
+			if (students[i].grades[j] >= 10) {
+				count_of_good++;
+			}
+		}
+		if (count_of_good >= 4) {
+			cout << "Студент " << students[i].surname << " является отличником\n";
+		}
+	}
+	cout << "Список двоечников: \n";
+	for (int i = 0; i < size; i++) {
+		int count_of_bad = 0;
+		for (int j = 0; j < 5; j++) {
+			if (students[i].grades[j] == 2 || students[i].grades[j] == 3) {
+				count_of_bad++;
+			}
+		}
+		if (count_of_bad >= 3) {
+			cout << "Студент " << students[i].surname << " является двоечником\n";
+		}
+	}
+}
+
+struct Man_Date {
+	int day;
+	int month;
+	int year;
+};
+
+struct Man {
+	char surname[30];
+	char name[20];
+	int age;
+	Man_Date birthday;
+};
+
+void Man_app(Man*& men, int& size) {
+	cout << "Добро пожаловать в Man App\n";
+	while (true) {
+		int choice = 0;
+		while (choice < 1 || choice > 5) {
+			cout << "Что вы хотите сделать?\n1: Вывести информацию про людей\n2: Вывести список именинников месяца\n3: Добавить или убрать запись о человеке\n4: Поиск по фамилии и имени\n5: Редактировать запись о человеке\nВаш выбор: ";
+			cin >> choice;
+		}
+		switch (choice) {
+		case 1: {
+			int choice_1 = 0;
+			while (choice_1 != 1 && choice_1 != 2) {
+				cout << "Перед выводом отсортировать людей по:\n1: Именам\n2: Фамилиям\nВаш выбор: ";
+				cin >> choice_1;
+			}
+			if (choice_1 == 1) {
+				cout << "Вот информация про людей, отсортированных по именам: \n";
+				for (int i = 0; i < size - 1; i++) {
+					for (int j = 0; j < size - i - 1; j++) {
+						if ((strcmp(men[j].name, men[j + 1].name) > 0)) {
+							Man temp = men[j];
+							men[j] = men[j + 1];
+							men[j + 1] = temp;
+						}
+					}
+				}
+				for (int i = 0; i < size; i++) {
+					cout << i + 1 << " человек:\n";
+					cout << "Имя: " << men[i].name << "\nФамилия: " << men[i].surname << "\nВозраст: " << men[i].age << "\nДата рождения: " << men[i].birthday.day << "." << men[i].birthday.month << "." << men[i].birthday.year << '\n';
+				}
+			}
+			else {
+				cout << "Вот информация про людей, отсортированных по фамилиям: \n";
+				for (int i = 0; i < size - 1; i++) {
+					for (int j = 0; j < size - i - 1; j++) {
+						if ((strcmp(men[j].surname, men[j + 1].surname) > 0)) {
+							Man temp = men[j];
+							men[j] = men[j + 1];
+							men[j + 1] = temp;
+						}
+					}
+				}
+				for (int i = 0; i < size; i++) {
+					cout << i + 1 << " человек:\n";
+					cout << "Имя: " << men[i].name << "\nФамилия: " << men[i].surname << "\nВозраст: " << men[i].age << "\nДата рождения: " << men[i].birthday.day << "." << men[i].birthday.month << "." << men[i].birthday.year << '\n';
+				}
+			}
+			break;
+		}
+		case 2: {
+			int choice_2 = 0;
+			while (choice_2 < 1 || choice_2 > 12) {
+				cout << "Введите порядковый номер месяца, чтобы вывести именинников, которые в нем родились: ";
+				cin >> choice_2;
+			}
+			cout << "Вот все именинники " << choice_2 << " месяца: \n";
+			for (int i = 0; i < size; i++) {
+				if (men[i].birthday.month == choice_2) {
+					cout << men[i].name << ' ' << men[i].surname << " - " << men[i].birthday.day << "." << men[i].birthday.month << "." << men[i].birthday.year << '\n';
+				}
+			}
+			break;
+		}
+		case 3: {
+			int choice_3 = 0;
+			while (choice_3 != 1 && choice_3 != 2) {
+				cout << "Вы хотите: \n1: Добавить запись о человеке в конец\n2: Убрать конкретную запись о человеке\nВаш выбор: ";
+				cin >> choice_3;
+			}
+			if (choice_3 == 1) {
+				Man* men_new = new Man[size + 1];
+				for (int i = 0; i < size; i++) {
+					strcpy_s(men_new[i].surname, men[i].surname);
+					strcpy_s(men_new[i].name, men[i].name);
+					men_new[i].age = men[i].age;
+					men_new[i].birthday.day = men[i].birthday.day;
+					men_new[i].birthday.month = men[i].birthday.month;
+					men_new[i].birthday.year = men[i].birthday.year;
+				}
+				int index = size;
+				char surname_new[30], name_new[20];
+				int age_new = -1, day_new = 0,month_new = 0,year_new = 0;
+				cin.ignore();
+				cout << "Введите имя нового человека: ";
+				cin.getline(name_new, 20);
+				strcpy_s(men_new[index].name, name_new);
+				cout << "Введите фамилию нового человека: ";
+				cin.getline(surname_new, 30);
+				strcpy_s(men_new[index].surname, surname_new);
+				while (age_new < 0 || age_new > 200) {
+					cout << "Введите возраст человека: ";
+					cin >> age_new;
+				}
+				men_new[index].age = age_new;
+				cout << "Введите дату рождения человека: ";
+				while (day_new < 1 || day_new > 31) {
+					cout << "День: ";
+					cin >> day_new;
+				}
+				while (month_new < 1 || month_new > 12) {
+					cout << "Месяц: ";
+					cin >> month_new;
+				}
+				cout << "Год: ";
+				cin >> year_new;
+				men_new[index].birthday.day = day_new, men_new[index].birthday.month = month_new, men_new[index].birthday.year = year_new;
+				cout << "Человек с фамилией " << men_new[index].surname << " успешно записан";
+				delete[] men;
+				size++;
+				men = men_new;
+			}
+			else {
+				int position = 0;
+				while (position < 1 || position > size) {
+					cout << "Человека под каким номером вы хотите удалить?: ";
+					cin >> position;
+				}
+				int index = position - 1;
+				Man* men_new = new Man[size - 1];
+				for (int i = 0; i < index; i++) {
+					strcpy_s(men_new[i].name, men[i].name);
+					strcpy_s(men_new[i].surname, men[i].surname);
+					men_new[i].age = men[i].age;
+					men_new[i].birthday.day = men[i].birthday.day;
+					men_new[i].birthday.month = men[i].birthday.month;
+					men_new[i].birthday.year = men[i].birthday.year;
+				}
+				for (int i = index + 1; i < size; i++) {
+					strcpy_s(men_new[i - 1].name, men[i].name);
+					strcpy_s(men_new[i - 1].surname, men[i].surname);
+					men_new[i - 1].age = men[i].age;
+					men_new[i - 1].birthday.day = men[i].birthday.day;
+					men_new[i - 1].birthday.month = men[i].birthday.month;
+					men_new[i - 1].birthday.year = men[i].birthday.year;
+				}
+				delete[] men;
+				size--;
+				men = men_new;
+			}
+			break;
+		}
+		case 4: {
+			cin.ignore();
+			int completed = 0;
+			char search_name[20], search_surname[30];
+			cout << "Введите имя человека для поиска: ";
+			cin.getline(search_name, 20);
+			cout << "Введите фамилию человека для поиска: ";
+			cin.getline(search_surname, 30);
+			for (int i = 0; i < size; i++) {
+				if (strcmp(men[i].name, search_name) == 0 && strcmp(men[i].surname, search_surname) == 0) {
+					cout << "Человек с таким именем и фамилией найден, он записан в системе под номером " << i + 1 << '\n';
+					completed++;
+				}
+			}
+			if (completed == 0) {
+				cout << "К сожалению, человека с таким именем и фамилией нет в системе\n";
+			}
+			break;
+		}
+		case 5: {
+			int choice_5 = 0;
+			while (choice_5 < 1 || choice_5 > size) {
+				cout << "Под каким номером человек, которого вы хотите отредактировать?: ";
+				cin >> choice_5;
+			}
+			int index = choice_5 - 1;
+			char surname_new[30], name_new[20];
+			int age_new = -1, day_new = 0, month_new = 0, year_new = 0;
+			cin.ignore();
+			cout << "Введите имя человека: ";
+			cin.getline(name_new, 20);
+			strcpy_s(men[index].name, name_new);
+			cout << "Введите фамилию человека: ";
+			cin.getline(surname_new, 30);
+			strcpy_s(men[index].surname, surname_new);
+			while (age_new < 0 || age_new > 200) {
+				cout << "Введите возраст человека: ";
+				cin >> age_new;
+			}
+			men[index].age = age_new;
+			cout << "Введите дату рождения человека: ";
+			while (day_new < 1 || day_new > 31) {
+				cout << "День: ";
+				cin >> day_new;
+			}
+			while (month_new < 1 || month_new > 12) {
+				cout << "Месяц: ";
+				cin >> month_new;
+			}
+			cout << "Год: ";
+			cin >> year_new;
+			men[index].birthday.day = day_new, men[index].birthday.month = month_new, men[index].birthday.year = year_new;
+			cout << "Человек был успешно перезаписан";
+			break;
+		}
+		}
+
+		int exit;
+		cout << "\nВы хотите выйти? (1 - да, любое число - нет): ";
+		cin >> exit;
+		if (exit == 1) {
+			cout << "До свидания!";
+			break;
+		}
+	}
+}
 
 int main()
 {
@@ -529,6 +1077,89 @@ int main()
 	}
 
 	{
+		cout << "\nFifth Task\n";
 
+		Creature army[10] = {
+			{ 15.5,  1, "Серый",      {.birdspeed = 60.0} },   // Голубь
+			{ 45.0,  2, "Коричневый", {.animalpaw = true} },  // Олень
+			{  5.0,  3, "Белый",      {.iq = 120} },          // Программист
+			{ 22.0,  1, "Черный",     {.birdspeed = 85.5} },   // Ворон
+			{ 50.0,  2, "Пятнистый",  {.animalpaw = true} },  // Корова
+			{  6.5,  3, "Загорелый",  {.iq = 95} },           // Спортсмен
+			{320.0,  1, "Пестрый",    {.birdspeed = 320.0} }, // Сапсан
+			{ 12.0,  2, "Розовый",    {.animalpaw = true} },  // Свинья
+			{  4.0,  3, "Рыжий",      {.iq = 140} },          // Ученый
+			{ 60.0,  2, "Рыжий",      {.animalpaw = false} }  // Лев (не парнокопытный)
+		};
+
+		Creature human;
+		SetCreature(human);
+		PrintCreature(human);
+
+		PrintCreatures(army, 10);
+		ChangeCreature(army, 10);
+		PrintCreatures(army, 10);
+		SearchCreature(army, 10);
+	}
+
+	{
+		cout << "\nSixth Task\n";
+		int size = 5;
+		Student* army_students = new Student[size];
+
+		strcpy_s(army_students[0].surname, "Иванов");
+		strcpy_s(army_students[0].group, "КИ-21-1");
+		army_students[0].grades[0] = 12; army_students[0].grades[1] = 12; army_students[0].grades[2] = 12; army_students[0].grades[3] = 12; army_students[0].grades[4] = 12;
+
+		strcpy_s(army_students[1].surname, "Петров");
+		strcpy_s(army_students[1].group, "КИ-21-1");
+		army_students[1].grades[0] = 10; army_students[1].grades[1] = 10; army_students[1].grades[2] = 10; army_students[1].grades[3] = 10; army_students[1].grades[4] = 8;
+
+		strcpy_s(army_students[2].surname, "Сидоров");
+		strcpy_s(army_students[2].group, "КИ-21-2");
+		army_students[2].grades[0] = 9; army_students[2].grades[1] = 8; army_students[2].grades[2] = 7; army_students[2].grades[3] = 9; army_students[2].grades[4] = 8;
+
+		strcpy_s(army_students[3].surname, "Коваленко");
+		strcpy_s(army_students[3].group, "КИ-21-2");
+		army_students[3].grades[0] = 3; army_students[3].grades[1] = 3; army_students[3].grades[2] = 3; army_students[3].grades[3] = 9; army_students[3].grades[4] = 9;
+
+		strcpy_s(army_students[4].surname, "Шевченко");
+		strcpy_s(army_students[4].group, "КИ-21-1");
+		army_students[4].grades[0] = 2; army_students[4].grades[1] = 2; army_students[4].grades[2] = 3; army_students[4].grades[3] = 3; army_students[4].grades[4] = 10;
+
+		PrintStudentsByGrades(army_students, size);
+
+		ChangeSizeStudent(army_students, size);
+
+		PrintStudentsByGrades(army_students, size);
+
+		delete[] army_students;
+	}
+
+	{
+		cout << "\nSeventh Task\n";
+
+		int current_size = 3;
+
+		Man* database = new Man[current_size];
+
+		strcpy_s(database[0].name, "Иван");
+		strcpy_s(database[0].surname, "Иванов");
+		database[0].age = 20;
+		database[0].birthday = { 15, 8, 2006 }; // день, месяц, год
+
+		strcpy_s(database[1].name, "Анна");
+		strcpy_s(database[1].surname, "Петрова");
+		database[1].age = 22;
+		database[1].birthday = { 5, 12, 2004 };
+
+		strcpy_s(database[2].name, "Алексей");
+		strcpy_s(database[2].surname, "Сидоров");
+		database[2].age = 19;
+		database[2].birthday = { 28, 8, 2007 };
+
+		Man_app(database, current_size);
+
+		delete[] database;
 	}
 }
