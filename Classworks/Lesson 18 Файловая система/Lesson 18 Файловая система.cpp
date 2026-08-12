@@ -34,7 +34,7 @@ int main()
 			cout << info.name << '\n';
 		} while (_findnext(handle, &info) == 0);
 		_findclose(handle);
-	}
+	//
 
 	// MY_DOUBLE var = 90.7;
 
