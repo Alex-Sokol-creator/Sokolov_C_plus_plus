@@ -1,3 +1,5 @@
 This is the second file,
 	and this line is similar to both ones.
 This one is not, as this is from the second file.
+
+This line is from the second file and it is the last.

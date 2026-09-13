@@ -76,5 +76,19 @@ int main()
 			fclose(secondfile);
 		}
 	}
+
+	{
+		cout << "\nSecond Task\n";
+		FILE* file_for_statistic;
+		FILE* statistic_file;
+		errno_t err1 = fopen_s(&file_for_statistic, "file_for_statistic.txt", "r");
+		errno_t err2 = fopen_s(&statistic_file, "statistic_file.txt", "w");
+		if (err1 || err2) {
+			cout << "К сожалению, при попытке открыть файлы произошла ошибка\n";
+		}
+		else {
+
+		}
+	}
 }
 
