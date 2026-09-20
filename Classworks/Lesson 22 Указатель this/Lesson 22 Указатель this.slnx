@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Lesson 21 Конструкторы.vcxproj" Id="caf202bf-6021-4854-bdcf-fa3c4ea62842" />
+  <Project Path="Lesson 22 Указатель this.vcxproj" Id="255e0109-d542-4a35-b59c-91a4c57deaf6" />
 </Solution>
