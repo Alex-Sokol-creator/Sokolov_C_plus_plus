@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{c3866add-265d-4c49-864b-c74f08e6c106}</ProjectGuid>
-    <RootNamespace>Lesson25Перегрузкафункцийидружныефункции</RootNamespace>
+    <ProjectGuid>{9be198bb-82f2-4e30-9304-1abc9088baa1}</ProjectGuid>
+    <RootNamespace>Dz22Константныефункции</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,13 +139,11 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Fraction.cpp" />
-    <ClCompile Include="Lesson 25 Перегрузка функций и дружные функции.cpp" />
-    <ClCompile Include="Permissions.cpp" />
+    <ClCompile Include="..\Dz 21 Конструктор копирования\MyString.cpp" />
+    <ClCompile Include="Dz 22 Константные функции.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Fraction.h" />
-    <ClInclude Include="Permissions.h" />
+    <ClInclude Include="..\Dz 21 Конструктор копирования\MyString.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

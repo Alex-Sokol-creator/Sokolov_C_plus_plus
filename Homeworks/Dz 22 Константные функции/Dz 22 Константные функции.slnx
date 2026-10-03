@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Элементы решения/" />
+  <Project Path="Dz 22 Константные функции.vcxproj" Id="9be198bb-82f2-4e30-9304-1abc9088baa1" />
+</Solution>
