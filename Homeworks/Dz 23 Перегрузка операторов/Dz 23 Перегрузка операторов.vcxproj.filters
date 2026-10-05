@@ -15,8 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lesson 26 Перегрузка сравнительных операторов, побитовых и логических операторов.cpp">
+    <ClCompile Include="Dz 23 Перегрузка операторов.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classworks\Lesson 25 Перегрузка функций и дружные функции\Fraction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Classworks\Lesson 25 Перегрузка функций и дружные функции\Fraction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{24ee79fa-bc79-4d51-9a9e-d9864df71c41}</ProjectGuid>
-    <RootNamespace>Lesson26Перегрузкасравнительныхоператоровпобитовыхилогическихоператоров</RootNamespace>
+    <ProjectGuid>{23ca7174-5420-4d18-b556-c6d9b089cc94}</ProjectGuid>
+    <RootNamespace>Dz23Перегрузкаоператоров</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,7 +139,11 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Lesson 26 Перегрузка сравнительных операторов, побитовых и логических операторов.cpp" />
+    <ClCompile Include="..\..\Classworks\Lesson 25 Перегрузка функций и дружные функции\Fraction.cpp" />
+    <ClCompile Include="Dz 23 Перегрузка операторов.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Classworks\Lesson 25 Перегрузка функций и дружные функции\Fraction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
