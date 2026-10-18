@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class MyString {
 private:
@@ -19,4 +20,13 @@ public:
 	char& operator[](size_t index);
 
 	const char& operator[](size_t index) const;
+
+
+	MyString(MyString&&) noexcept;
+
+	MyString& operator=(MyString&&) noexcept;
+
+	friend MyString operator+(const MyString& num1, const MyString& num2);
+
+	friend std::ostream& operator<<(std::ostream& os, const MyString& str);
 };

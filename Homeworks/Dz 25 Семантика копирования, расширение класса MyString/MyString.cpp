@@ -85,3 +85,39 @@ const char& MyString::operator[](size_t index) const {
 	}
 	return data[index];
 }
+
+MyString::MyString(MyString&& other) noexcept : data(other.data), length(other.length) {
+	other.data = nullptr;
+	other.length = 0;
+	std::cout << "[Move Constructor]\n";
+}
+
+MyString& MyString::operator=(MyString&& other) noexcept {
+	if (this == &other) {
+		return *this;
+	}
+	delete[] data;
+	data = other.data;
+	length = other.length;
+	other.data = nullptr;
+	other.length = 0;
+	std::cout << "[Move operator]\n";
+	return *this;
+}
+
+MyString operator+(const MyString& num1, const MyString& num2) {
+	MyString result;
+	delete[] result.data;
+	result.length = num1.length + num2.length;
+	result.data = new char[result.length + 1];
+	strcpy_s(result.data, result.length + 1, num1.data);
+	strcat_s(result.data, result.length + 1, num2.data);
+	return result;
+}
+
+std::ostream& operator<<(std::ostream& os, const MyString& str) {
+	if (str.data != nullptr) {
+		os << str.data;
+	}
+	return os;
+}
