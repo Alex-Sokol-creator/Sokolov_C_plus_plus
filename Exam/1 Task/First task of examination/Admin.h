@@ -9,8 +9,8 @@ class Guest;
 class Admin_Tools {
 public:
 	void AddGuest(std::vector<Guest>& guests);
-	void DeleteGuest(Guest& guest);
-	void ModifyGuest(Guest& guest);
+	void DeleteGuest(std::vector<Guest>& guests);
+	void ModifyGuest(std::vector<Guest>& guests);
 	void AddCategory(Tests& tests);
 	void DeleteCategory(Tests& tests);
 	void AddTest(Tests& tests);
@@ -18,6 +18,8 @@ public:
 	void ShowStatistics(Tests& tests) const;
 	void ImportText();
 	void ExportText();
+
+	void ShowGuests(const std::vector<Guest>& guests) const;
 };
 
 class Admin
@@ -37,5 +39,6 @@ public:
 	void ChangePassword();
 	const std::string& GetLogin() const;
 	bool CheckPassword(const std::string& password) const;
+	Admin_Tools& GetTools();
 };
 

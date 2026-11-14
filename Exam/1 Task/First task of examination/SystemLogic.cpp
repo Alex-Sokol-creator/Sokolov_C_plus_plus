@@ -325,16 +325,16 @@ void SystemLogic::AdminMenu(){
         std::cin >> choice;
         switch (choice) {
         case 1:
-            // Просмотр гостей
+            admin.GetTools().ShowGuests(All_Guests);
             break;
         case 2:
-            // Добавление гостя
+            admin.GetTools().AddGuest(All_Guests);
             break;
         case 3:
-            // Удаление гостя
+            admin.GetTools().DeleteGuest(All_Guests);
             break;
         case 4:
-            // Изменение данных гостя
+            admin.GetTools().ModifyGuest(All_Guests);
             break;
         case 5:
             // Управление категориями

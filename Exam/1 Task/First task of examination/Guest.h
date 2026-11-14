@@ -30,5 +30,13 @@ public:
 
     void AddResult(const TestResult& result);
     void ShowResults() const;
+
+    void SetName(const std::string& name);
+    void SetSurname(const std::string& surname);
+    void SetFathersName(const std::string& fathers_name);
+    void SetAddress(const std::string& address);
+    void SetPhoneNumber(const std::string& phone_number);
+    void SetLogin(const std::string& login);
+    void SetPassword(const std::string& password);
 };
 

@@ -49,3 +49,31 @@ void Guest::ShowResults() const{
             << "Процент правильных ответов: " << result.percentage << "%\n" << "Оценка: " << result.grade << "/12\n";
     }
 }
+
+void Guest::SetName(const std::string& name) {
+    personal_data.name = name;
+}
+
+void Guest::SetSurname(const std::string& surname) {
+    personal_data.surname = surname;
+}
+
+void Guest::SetFathersName(const std::string& fathers_name) {
+    personal_data.fathers_name = fathers_name;
+}
+
+void Guest::SetAddress(const std::string& address) {
+    personal_address = address;
+}
+
+void Guest::SetPhoneNumber(const std::string& phone_number) {
+    this->phone_number = phone_number;
+}
+
+void Guest::SetLogin(const std::string& login) {
+    this->login = login;
+}
+
+void Guest::SetPassword(const std::string& password) {
+    this->password = password;
+}
