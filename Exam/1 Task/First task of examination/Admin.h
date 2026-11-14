@@ -24,7 +24,7 @@ class Admin
 {
 private:
 	PIB personal_data;
-	std::string personal_adress;
+	std::string personal_address;
 	std::string phone_number;
 	std::string login;
 	std::string password;

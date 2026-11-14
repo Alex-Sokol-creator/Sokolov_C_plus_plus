@@ -24,6 +24,7 @@ private:
 	Admin admin; // админ
 	Tests tests; // Тесты
 	Files files; // Файловый менеджер
+	bool admin_registered = false;
 public:
 	SystemLogic();
 	~SystemLogic() = default;
@@ -37,5 +38,6 @@ public:
 	void Entering_the_system_admin(); // Вход админа
 
 	void GuestMenu(Guest& guest); // Меню гостя
+	void AdminMenu(); // Меню админа
 	void StartGuestTesting(Guest& guest); // Контроль начала тестов
 };

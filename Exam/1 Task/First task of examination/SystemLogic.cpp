@@ -67,8 +67,9 @@ void SystemLogic::Run()
         std::cout << "\n========== Система тестирования ==========\n";
         std::cout << "1. Регистрация гостя\n";
         std::cout << "2. Вход гостя\n";
-        std::cout << "3. Вход администратора\n";
-        std::cout << "4. Выход\n";
+        std::cout << "3. Регистрация администратора\n";
+        std::cout << "4. Вход администратора\n";
+        std::cout << "5. Выход\n";
         std::cout << "Ваш выбор: ";
         std::cin >> choice;
         std::cin.ignore();
@@ -81,11 +82,15 @@ void SystemLogic::Run()
             Entering_the_system_guests();
             break;
         }
-        case 3:{
+        case 3: {
+            AdminRegistration();
+            break;
+        }
+        case 4:{
             Entering_the_system_admin();
             break;
         }
-        case 4: {
+        case 5: {
             std::cout << "Завершение программы...\n";
             break;
         }
@@ -93,7 +98,7 @@ void SystemLogic::Run()
             std::cout << "Неверный выбор!\n";
             break;
         }
-    } while (choice != 4);
+    } while (choice != 5);
 }
 
 void SystemLogic::GuestsRegistration()
@@ -235,4 +240,116 @@ void SystemLogic::StartGuestTesting(Guest& guest)
     }
 
     // Позже здесь сохраним результат гостя
+}
+
+
+void SystemLogic::AdminRegistration(){
+    if (admin_registered) {
+        std::cout << "Администратор уже зарегистрирован!\n";
+        return;
+    }
+    PIB personal_data;
+    std::string personal_address;
+    std::string phone_number;
+    std::string login;
+    std::string password;
+    std::cout << "\n===== РЕГИСТРАЦИЯ АДМИНИСТРАТОРА =====\n";
+    std::cout << "Введите имя: ";
+    std::getline(std::cin, personal_data.name);
+    std::cout << "Введите фамилию: ";
+    std::getline(std::cin, personal_data.surname);
+    std::cout << "Введите отчество: ";
+    std::getline(std::cin, personal_data.fathers_name);
+    std::cout << "Введите адрес: ";
+    std::getline(std::cin, personal_address);
+    std::cout << "Введите номер телефона: ";
+    std::getline(std::cin, phone_number);
+    std::cout << "Придумайте логин: ";
+    std::getline(std::cin, login);
+    std::cout << "Придумайте пароль: ";
+    std::getline(std::cin, password);
+    if (personal_data.name.empty() ||
+        personal_data.surname.empty() ||
+        personal_address.empty() ||
+        phone_number.empty() ||
+        login.empty() ||
+        password.empty()) {
+        std::cout << "Ошибка! Заполните обязательные поля.\n";
+        return;
+    }
+    admin = Admin(personal_data, personal_address, phone_number, login, password);
+    admin_registered = true;
+    std::cout << "\nАдминистратор успешно зарегистрирован!\n";
+}
+
+
+void SystemLogic::Entering_the_system_admin(){
+    if (!admin_registered) {
+        std::cout << "Администратор ещё не зарегистрирован!\nСначала зарегистрируйте администратора.\n";
+        return;
+    }
+    std::string login_entered;
+    std::string password_entered;
+    std::cout << "\n===== ВХОД АДМИНИСТРАТОРА =====\n";
+    std::cout << "Введите логин: ";
+    std::getline(std::cin, login_entered);
+    if (admin.GetLogin() != login_entered) {
+        std::cout << "Неверный логин, повторите попытку\n";
+        return;
+    }
+    std::cout << "Введите пароль: ";
+    std::getline(std::cin, password_entered);
+    if (admin.CheckPassword(password_entered)) {
+        std::cout << "\nАвторизация успешна!\n";
+        AdminMenu();
+    }
+    else {
+        std::cout << "Неверный пароль, повторите попытку\n";
+    }
+}
+
+
+void SystemLogic::AdminMenu(){
+    int choice = 0;
+    do {
+        std::cout << "\n========== МЕНЮ АДМИНИСТРАТОРА ==========\n";
+        std::cout << "1. Просмотреть гостей\n";
+        std::cout << "2. Добавить гостя\n";
+        std::cout << "3. Удалить гостя\n";
+        std::cout << "4. Изменить данные гостя\n";
+        std::cout << "5. Управление категориями\n";
+        std::cout << "6. Управление тестами\n";
+        std::cout << "7. Статистика\n";
+        std::cout << "8. Выход\n";
+        std::cout << "Ваш выбор: ";
+        std::cin >> choice;
+        switch (choice) {
+        case 1:
+            // Просмотр гостей
+            break;
+        case 2:
+            // Добавление гостя
+            break;
+        case 3:
+            // Удаление гостя
+            break;
+        case 4:
+            // Изменение данных гостя
+            break;
+        case 5:
+            // Управление категориями
+            break;
+        case 6:
+            // Управление тестами
+            break;
+        case 7:
+            // Статистика
+            break;
+        case 8:
+            std::cout << "Выход из административного меню...\n";
+            break;
+        default:
+            std::cout << "Неверный выбор!\n";
+        }
+    } while (choice != 8);
 }
