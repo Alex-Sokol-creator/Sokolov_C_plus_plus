@@ -60,6 +60,112 @@ SystemLogic::SystemLogic(){
 }
 
 
+void SystemLogic::Run()
+{
+    int choice = 0;
+    do {
+        std::cout << "\n========== Система тестирования ==========\n";
+        std::cout << "1. Регистрация гостя\n";
+        std::cout << "2. Вход гостя\n";
+        std::cout << "3. Вход администратора\n";
+        std::cout << "4. Выход\n";
+        std::cout << "Ваш выбор: ";
+        std::cin >> choice;
+        std::cin.ignore();
+        switch (choice) {
+        case 1:{
+            GuestsRegistration();
+            break;
+        }
+        case 2:{
+            Entering_the_system_guests();
+            break;
+        }
+        case 3:{
+            Entering_the_system_admin();
+            break;
+        }
+        case 4: {
+            std::cout << "Завершение программы...\n";
+            break;
+        }
+        default:
+            std::cout << "Неверный выбор!\n";
+            break;
+        }
+    } while (choice != 4);
+}
+
+void SystemLogic::GuestsRegistration()
+{
+    PIB personal_data;
+    std::string personal_address;
+    std::string phone_number;
+    std::string login;
+    std::string password;
+    std::cout << "\n===== РЕГИСТРАЦИЯ ГОСТЯ =====\n";
+    std::cout << "Введите имя: ";
+    std::cin >> personal_data.name;
+    std::cout << "Введите фамилию: ";
+    std::cin >> personal_data.surname;
+    std::cout << "Введите отчество: ";
+    std::cin >> personal_data.fathers_name;
+    std::cin.ignore();
+    std::cout << "Введите адрес: ";
+    std::getline(std::cin, personal_address);
+    std::cout << "Введите номер телефона: ";
+    std::getline(std::cin, phone_number);
+    std::cout << "Придумайте логин: ";
+    std::getline(std::cin, login);
+    if (IsLoginTaken(login)) {
+        std::cout << "Такой логин уже существует!\n";
+        return;
+    }
+    std::cout << "Придумайте пароль: ";
+    std::getline(std::cin, password);
+    Guest new_guest(personal_data, personal_address, phone_number, login, password);
+    if (new_guest.CheckGuestData() != true) {
+        std::cout << "Ошибка! Заполните все обязательные данные.\n";
+        return;
+    }
+    All_Guests.push_back(new_guest);
+    std::cout << "\nРегистрация успешно завершена!\n";
+}
+
+
+void SystemLogic::Entering_the_system_guests() {
+    std::string login_entered;
+    std::string password_entered;
+    std::cout << "Введите логин для входа в систему: ";
+    std::getline(std::cin, login_entered);
+    bool founded = false;
+    int guest_index = 0;
+    for (const Guest& guest : All_Guests) {
+        if (guest.GetLogin() == login_entered) {
+            founded = true;
+            break;
+        }
+        guest_index++;
+    }
+    if (founded == true) {
+        std::cout << "Введите пароль для входа в систему: ";
+        std::getline(std::cin, password_entered);
+        if (All_Guests[guest_index].CheckPassword(password_entered)) {
+            std::cout << "Авторизация произошла успешно\n";
+            GuestMenu(All_Guests[guest_index]);
+        }
+        else {
+            std::cout << "Пароль неверный, повторите попытку авторизации\n";
+            return;
+        }
+    }
+    else {
+        std::cout << "К сожалению такого логина нет в нашей базе данных, повторите попытку или же зарегистрируйтесь\n";
+        return;
+    }
+}
+
+
 void SystemLogic::GuestMenu(Guest& guest)
 {
     int choice = 0;
@@ -79,7 +185,7 @@ void SystemLogic::GuestMenu(Guest& guest)
             break;
 
         case 2:
-            tests.LookPrevious();
+            guest.ShowResults();
             break;
 
         case 3:
@@ -113,6 +219,20 @@ void SystemLogic::StartGuestTesting(Guest& guest)
     }
     TestAttempt attempt;
     attempt.StartTest(*selected_test);
+
+    if (attempt.IsFinished()) {
+        TestResult result{
+            selected_test->id,
+            selected_test->name,
+            attempt.GetCorrectAnswers(),
+            attempt.GetRightPercentage(),
+            attempt.GetResultGrade() };
+    guest.AddResult(result);
+    std::cout << "\nРезультат успешно добавлен в вашу историю!\n";
+    }
+    else {
+        std::cout << "\nРезультат не сохранён, поскольку тест не был завершён.\n";
+    }
 
     // Позже здесь сохраним результат гостя
 }

@@ -35,5 +35,7 @@ public:
 
 	void ChangeLogin();
 	void ChangePassword();
+	const std::string& GetLogin() const;
+	bool CheckPassword(const std::string& password) const;
 };
 

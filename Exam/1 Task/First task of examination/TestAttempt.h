@@ -11,6 +11,7 @@ private:
 	int result_grade = 0;
 	bool ongoing_test = false;
 	bool paused = false;
+	bool finished = false;
 	std::vector<int> user_answers;
 public:
 	TestAttempt() = default;
@@ -20,7 +21,11 @@ public:
 	void ContinueTest(const Test& selected_test); // Продолжение ( если ongoing == true)
 	void StopTest(); // Стоп теста
 	void CalculateResult(const Test& selected_test); // Подсчет результата
-	void SaveResult(); // Сохранение результата
 	void RunQuestions(const Test& selected_test);
+
+	int GetCorrectAnswers() const;
+	double GetRightPercentage() const;
+	int GetResultGrade() const;
+	bool IsFinished() const;
 };
 

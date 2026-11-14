@@ -3,8 +3,59 @@
 #include <iostream>
 #include <cmath>
 
-void TestAttempt::RunQuestions(const Test& selected_test)
-{
+TestAttempt::TestAttempt(int current_question, int correct_answers, double right_percentage, int result_grade, bool ongoing_test, const std::vector<int>& user_answers)
+    : current_question(current_question), correct_answers(correct_answers), right_percentage(right_percentage),
+    result_grade(result_grade), ongoing_test(ongoing_test), user_answers(user_answers){};
+
+void TestAttempt::CalculateResult(const Test& selected_test){
+    correct_answers = 0;
+    for (int i = 0; i < selected_test.questions.size(); i++) {
+        const Question& question = selected_test.questions[i];
+        if (i >= user_answers.size() || user_answers[i] == -1) {
+            continue;
+        }
+        int answer_index = user_answers[i];
+        if (answer_index < question.answers.size() && question.answers[answer_index].is_correct) {
+            correct_answers++;
+        }
+    }
+    int total_questions = static_cast<int>(selected_test.questions.size());
+    if (total_questions == 0) {
+        return;
+    }
+    right_percentage = static_cast<double>(correct_answers) / total_questions * 100.0;
+    result_grade = static_cast<int>(std::ceil(right_percentage / 100.0 * 12));
+    if (result_grade < 1) {
+        result_grade = 1;
+    }
+    if (result_grade > 12) {
+        result_grade = 12;
+    }
+    std::cout << "Результат:\n";
+    std::cout << "Правильных ответов: " << correct_answers << " из " << total_questions << '\n';
+    std::cout << "Процент правильных ответов: " << right_percentage << "%\n";
+    std::cout << "Оценка по 12-балльной системе: " << result_grade << '\n';
+}
+
+void TestAttempt::StopTest(){
+    if (ongoing_test != true) {
+        return;
+    }
+    paused = true;
+    std::cout << "\nТест поставлен на паузу\n";
+}
+
+void TestAttempt::ContinueTest(const Test& selected_test){
+    if (ongoing_test != true || paused != true) {
+        std::cout << "Нет приостановленного теста!\n";
+        return;
+    }
+    paused = false;
+    std::cout << "\nТест продолжается\n";
+    RunQuestions(selected_test);
+}
+
+void TestAttempt::RunQuestions(const Test& selected_test){
     while (current_question < selected_test.questions.size()) {
         const Question& question = selected_test.questions[current_question];
         std::cout << "Вопрос " << current_question + 1 << " из " << selected_test.questions.size() << '\n' << question.text << '\n';
@@ -27,27 +78,19 @@ void TestAttempt::RunQuestions(const Test& selected_test)
             if (choice >= 1 && choice <= question.answers.size()) {
                 break;
             }
-
-            std::cout << "Выберите существующий вариант ответа!\n";
+            std::cout << "Выберите нормальный ответ\n";
         }
-
-        // Запоминаем индекс выбранного ответа.
         user_answers[current_question] = choice - 1;
-
         current_question++;
     }
-
-    // Все вопросы пройдены.
     ongoing_test = false;
     paused = false;
-
+    finished == true; // Когда тест закончился
     std::cout << "\nТест завершен!\n";
-
     CalculateResult(selected_test);
 }
 
-void TestAttempt::StartTest(const Test& selected_test)
-{
+void TestAttempt::StartTest(const Test& selected_test){
     if (selected_test.questions.empty()) {
         std::cout << "К сожалению, в этом тесте пока нет вопросов\n";
         return;
@@ -80,4 +123,21 @@ void TestAttempt::StartTest(const Test& selected_test)
             std::cout << "Неправильный выбор\n";
         }
     }
+}
+
+
+int TestAttempt::GetCorrectAnswers() const {
+    return correct_answers;
+}
+
+double TestAttempt::GetRightPercentage() const {
+    return right_percentage;
+}
+
+int TestAttempt::GetResultGrade() const {
+    return result_grade;
+}
+
+bool TestAttempt::IsFinished() const {
+    return finished;
 }

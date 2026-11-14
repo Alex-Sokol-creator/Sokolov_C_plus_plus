@@ -33,8 +33,6 @@ public:
 
 	const Category* ChooseCategory() const; // Выбор категории теста
 	const Test* ChooseTest(const Category& category) const; // Выбор конкретного теста
-
-	void LookPrevious(); // Посмотреть прошлые тесты
-	void AddCategory(const Category& category);
+	void AddCategory(const Category& category); // Добавить категорию
 };
 

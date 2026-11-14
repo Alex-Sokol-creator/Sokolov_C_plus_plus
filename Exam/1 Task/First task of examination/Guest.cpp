@@ -29,3 +29,23 @@ bool Guest::CheckGuestData() const
 const std::string& Guest::GetLogin() const{
     return login;
 }
+
+bool Guest::CheckPassword(const std::string& password) const{
+    return this->password == password;
+}
+
+void Guest::AddResult(const TestResult& result){
+    results.push_back(result);
+}
+
+void Guest::ShowResults() const{
+    if (results.empty()) {
+        std::cout << "У вас пока нет пройденных тестов.\n";
+        return;
+    }
+    std::cout << "\n========== ИСТОРИЯ РЕЗУЛЬТАТОВ ==========\n";
+    for (const TestResult& result : results) {
+        std::cout << "\nТест: " << result.test_name << '\n' << "ID теста: " << result.test_id << '\n' << "Правильных ответов: " << result.correct_answers << '\n'
+            << "Процент правильных ответов: " << result.percentage << "%\n" << "Оценка: " << result.grade << "/12\n";
+    }
+}
