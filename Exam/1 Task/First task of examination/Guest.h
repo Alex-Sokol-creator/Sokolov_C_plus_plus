@@ -3,8 +3,6 @@
 #include <string>
 #include "PIB.h"
 
-class Tests;
-
 class Guest
 {
 private:
@@ -18,6 +16,6 @@ public:
     Guest(const PIB& personal_data, const std::string& personal_address, const std::string& phone_number, const std::string& login, const std::string& password);
 
     bool CheckGuestData() const; // Проверка
-    void StartTesting(Tests& tests); // Контроль начала тестов
+    const std::string& GetLogin() const; // Геттер логина
 };
 

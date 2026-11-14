@@ -143,6 +143,7 @@
     <ClCompile Include="First task of examination.cpp" />
     <ClCompile Include="Guest.cpp" />
     <ClCompile Include="SystemLogic.cpp" />
+    <ClCompile Include="TestAttempt.cpp" />
     <ClCompile Include="Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="Guest.h" />
     <ClInclude Include="PIB.h" />
     <ClInclude Include="SystemLogic.h" />
+    <ClInclude Include="TestAttempt.h" />
     <ClInclude Include="Tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
