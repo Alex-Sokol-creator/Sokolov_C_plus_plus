@@ -38,5 +38,11 @@ public:
     void SetPhoneNumber(const std::string& phone_number);
     void SetLogin(const std::string& login);
     void SetPassword(const std::string& password);
+
+    const PIB& GetPersonalData() const;
+    const std::string& GetAddress() const;
+    const std::string& GetPhoneNumber() const;
+    const std::string& GetPassword() const;
+    const std::vector<TestResult>& GetResults() const;
 };
 

@@ -62,6 +62,8 @@ SystemLogic::SystemLogic(){
     tests.AddCategory(General_knowledges);
 
     files.LoadTests(tests);
+    files.LoadGuests(All_Guests);
+    files.LoadAdmin(admin, admin_registered);
 }
 
 
@@ -99,6 +101,8 @@ void SystemLogic::Run()
         }
         case 5: {
             files.SaveTests(tests);
+            files.SaveGuests(All_Guests);
+            files.SaveAdmin(admin, admin_registered);
             std::cout << "Завершение программы...\n";
             break;
         }
@@ -381,15 +385,15 @@ void SystemLogic::AdminMenu(){
 // Сохранение и загрузка
 
 void Files::SaveTests(const Tests& tests) {
-    std::ofstream file("tests.txt");
+    std::ofstream file("tests.txt"); // Запись данных в файл
     if (file.is_open() != true) {
         std::cout << "Не удалось открыть файл для сохранения!\n";
         return;
     }
     const auto& categories = tests.GetCategories();
-    file << categories.size() << '\n';
+    file << categories.size() << '\n'; // << - запись в файл
     for (const Category& category : categories) {
-        file << std::quoted(category.name) << '\n';
+        file << std::quoted(category.name) << '\n'; // quoted - элемент библиотеки iomanip, это запись строки в кавычках "", а также позволяет считать строку целиком
         file << category.tests.size() << '\n';
         for (const Test& test : category.tests) {
             file << test.id << '\n';
@@ -409,14 +413,14 @@ void Files::SaveTests(const Tests& tests) {
 }
 
 void Files::LoadTests(Tests& tests) {
-    std::ifstream file("tests.txt");
+    std::ifstream file("tests.txt"); // Чтение данных из файла
     if (file.is_open() != true) {
         std::cout << "Файл с тестами не найден. Используются стандартные тесты.\n";
         return;
     }
     std::vector<Category> loaded_categories;
     int category_count;
-    if (!(file >> category_count) || category_count < 0) {
+    if (!(file >> category_count) || category_count < 0) { // >> - считывание данные по очереди
         std::cout << "Ошибка формата файла!\n";
         return;
     }
@@ -424,8 +428,7 @@ void Files::LoadTests(Tests& tests) {
     for (int i = 0; i < category_count; i++) {
         Category category;
         int test_count;
-        if (!(file >> std::quoted(category.name) >> test_count) ||
-            test_count < 0) {
+        if (!(file >> std::quoted(category.name) >> test_count) || test_count < 0) { // Считывание идет в реальном времени, и данные записываются в оперативную память
             std::cout << "Ошибка загрузки категорий!\n";
             return;
         }
@@ -459,4 +462,142 @@ void Files::LoadTests(Tests& tests) {
     }
     tests.SetCategories(loaded_categories);
     std::cout << "Тесты успешно загружены из файла!\n";
+}
+
+void Files::SaveGuests(const std::vector<Guest>& guests) {
+    std::ofstream file("guests.txt");
+    if (!file.is_open()) {
+        std::cout << "Ошибка открытия файла гостей!\n";
+        return;
+    }
+    file << guests.size() << '\n';
+    for (const Guest& guest : guests) {
+        const PIB& data = guest.GetPersonalData();
+        file << std::quoted(data.name) << '\n';
+        file << std::quoted(data.surname) << '\n';
+        file << std::quoted(data.fathers_name) << '\n';
+        file << std::quoted(guest.GetAddress()) << '\n';
+        file << std::quoted(guest.GetPhoneNumber()) << '\n';
+        file << std::quoted(guest.GetLogin()) << '\n';
+        file << std::quoted(guest.GetPassword()) << '\n';
+        const auto& results = guest.GetResults();
+        file << results.size() << '\n';
+        for (const TestResult& result : results) {
+            file << result.test_id << '\n';
+            file << std::quoted(result.test_name) << '\n';
+            file << result.correct_answers << '\n';
+            file << result.percentage << '\n';
+            file << result.grade << '\n';
+        }
+    }
+    std::cout << "Данные гостей успешно сохранены!\n";
+}
+
+void Files::LoadGuests(std::vector<Guest>& guests) {
+    std::ifstream file("guests.txt");
+    if (!file.is_open()) {
+        std::cout << "Файл гостей не найден. Список гостей пуст.\n";
+        return;
+    }
+    std::vector<Guest> loaded_guests;
+    int guest_count;
+    if (!(file >> guest_count) || guest_count < 0) {
+        std::cout << "Ошибка формата файла гостей!\n";
+        return;
+    }
+    for (int i = 0; i < guest_count; i++) {
+        PIB data;
+        std::string address;
+        std::string phone;
+        std::string login;
+        std::string password;
+        if (!(file >> std::quoted(data.name)
+            >> std::quoted(data.surname)
+            >> std::quoted(data.fathers_name)
+            >> std::quoted(address)
+            >> std::quoted(phone)
+            >> std::quoted(login)
+            >> std::quoted(password))) {
+            std::cout << "Ошибка загрузки данных гостя!\n";
+            return;
+        }
+        Guest guest(data, address, phone, login, password);
+        int result_count;
+        if (!(file >> result_count) || result_count < 0) {
+            std::cout << "Ошибка загрузки истории результатов!\n";
+            return;
+        }
+        for (int j = 0; j < result_count; j++) {
+            TestResult result;
+            if (!(file >> result.test_id
+                >> std::quoted(result.test_name)
+                >> result.correct_answers
+                >> result.percentage
+                >> result.grade)) {
+                std::cout << "Ошибка загрузки результата!\n";
+                return;
+            }
+            guest.AddResult(result);
+        }
+        loaded_guests.push_back(guest);
+    }
+    guests = loaded_guests;
+    std::cout << "Данные гостей успешно загружены!\n";
+}
+
+void Files::SaveAdmin(const Admin& admin, bool registered) {
+    std::ofstream file("admin.txt");
+    if (!file.is_open()) {
+        std::cout << "Ошибка открытия файла администратора!\n";
+        return;
+    }
+    file << registered << '\n';
+    if (!registered) {
+        return;
+    }
+    const PIB& data = admin.GetPersonalData();
+    file << std::quoted(data.name) << '\n';
+    file << std::quoted(data.surname) << '\n';
+    file << std::quoted(data.fathers_name) << '\n';
+    file << std::quoted(admin.GetAddress()) << '\n';
+    file << std::quoted(admin.GetPhoneNumber()) << '\n';
+    file << std::quoted(admin.GetLogin()) << '\n';
+    file << std::quoted(admin.GetPassword()) << '\n';
+    std::cout << "Данные администратора успешно сохранены!\n";
+}
+
+void Files::LoadAdmin(Admin& admin, bool& registered) {
+    std::ifstream file("admin.txt");
+    if (!file.is_open()) {
+        registered = false;
+        std::cout << "Файл администратора не найден.\n";
+        return;
+    }
+    if (!(file >> registered)) {
+        registered = false;
+        std::cout << "Ошибка загрузки администратора!\n";
+        return;
+    }
+    if (registered != true) {
+        std::cout << "Зарегистрированный администратор отсутствует.\n";
+        return;
+    }
+    PIB data;
+    std::string address;
+    std::string phone;
+    std::string login;
+    std::string password;
+    if (!(file >> std::quoted(data.name)
+        >> std::quoted(data.surname)
+        >> std::quoted(data.fathers_name)
+        >> std::quoted(address)
+        >> std::quoted(phone)
+        >> std::quoted(login)
+        >> std::quoted(password))) {
+        registered = false;
+        std::cout << "Ошибка чтения данных администратора!\n";
+        return;
+    }
+    admin = Admin(data, address, phone, login, password);
+    std::cout << "Данные администратора успешно загружены!\n";
 }

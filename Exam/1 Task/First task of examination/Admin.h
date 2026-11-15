@@ -52,5 +52,10 @@ public:
 	const std::string& GetLogin() const;
 	bool CheckPassword(const std::string& password) const;
 	Admin_Tools& GetTools();
+
+	const PIB& GetPersonalData() const;
+	const std::string& GetAddress() const;
+	const std::string& GetPhoneNumber() const;
+	const std::string& GetPassword() const;
 };
 

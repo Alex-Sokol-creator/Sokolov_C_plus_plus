@@ -515,3 +515,20 @@ void Admin_Tools::ShowStatistics(Tests& tests) const {
     std::cout << "Количество тестов: " << total_tests << '\n';
     std::cout << "Количество вопросов: " << total_questions << '\n';
 }
+
+
+const PIB& Admin::GetPersonalData() const {
+    return personal_data;
+}
+
+const std::string& Admin::GetAddress() const {
+    return personal_address;
+}
+
+const std::string& Admin::GetPhoneNumber() const {
+    return phone_number;
+}
+
+const std::string& Admin::GetPassword() const {
+    return password;
+}

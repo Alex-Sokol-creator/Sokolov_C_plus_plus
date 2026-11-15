@@ -77,3 +77,24 @@ void Guest::SetLogin(const std::string& login) {
 void Guest::SetPassword(const std::string& password) {
     this->password = password;
 }
+
+
+const PIB& Guest::GetPersonalData() const {
+    return personal_data;
+}
+
+const std::string& Guest::GetAddress() const {
+    return personal_address;
+}
+
+const std::string& Guest::GetPhoneNumber() const {
+    return phone_number;
+}
+
+const std::string& Guest::GetPassword() const {
+    return password;
+}
+
+const std::vector<TestResult>& Guest::GetResults() const {
+    return results;
+}

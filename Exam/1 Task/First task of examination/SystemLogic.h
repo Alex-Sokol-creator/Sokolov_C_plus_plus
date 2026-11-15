@@ -10,10 +10,14 @@ class Files;
 
 class Files {
 public:
-	void SaveGuests(const std::vector<Guest>& guests);
-
 	void SaveTests(const Tests& tests);
 	void LoadTests(Tests& tests);
+
+	void SaveGuests(const std::vector<Guest>& guests);
+	void LoadGuests(std::vector<Guest>& guests);
+
+	void SaveAdmin(const Admin& admin, bool registered);
+	void LoadAdmin(Admin& admin, bool& registered);
 };
 
 class SystemLogic
