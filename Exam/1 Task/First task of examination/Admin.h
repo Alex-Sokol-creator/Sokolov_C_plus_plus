@@ -18,6 +18,7 @@ public:
 	void ManageCategories(Tests& tests);
 
 	void AddTest(Tests& tests);
+	void DeleteTest(Tests& tests);
 	void ShowTests(const Tests& tests) const;
 	void ManageTests(Tests& tests);
 
@@ -25,8 +26,10 @@ public:
 
 	void ShowStatistics(Tests& tests) const;
 
-	void ImportText();
+	/*
+	void ImportText(); // До лучших времен
 	void ExportText();
+	*/
 
 	void ShowGuests(const std::vector<Guest>& guests) const;
 };

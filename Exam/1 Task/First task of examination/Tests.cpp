@@ -59,3 +59,13 @@ void Tests::DeleteTest(int category_index, int test_index){
 	}
 	selected_tests.erase(selected_tests.begin() + test_index);
 }
+
+void Tests::AddQuestion(int category_index, int test_index, const Question& question) {
+	if (category_index < 0 || category_index >= categories.size()) {
+		return;
+	}
+	if (test_index < 0 || test_index >= categories[category_index].tests.size()) {
+		return;
+	}
+	categories[category_index].tests[test_index].questions.push_back(question);
+}

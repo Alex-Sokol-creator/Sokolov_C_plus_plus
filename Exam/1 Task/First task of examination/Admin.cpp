@@ -9,6 +9,30 @@ Admin::Admin() = default;
 Admin::Admin(const PIB& personal_data, const std::string& personal_address, const std::string& phone_number, const std::string& login, const std::string& password)
     : personal_data(personal_data), personal_address(personal_address), phone_number(phone_number), login(login), password(password) {}
 
+void Admin::ChangeLogin() {
+    std::string login_new;
+    std::cout << "Напишите новый логин: ";
+    std::getline(std::cin, login_new);
+    if (login_new.empty()) {
+        std::cout << "Логин не может быть пустой!\n";
+        return;
+    }
+    this->login = login_new;
+    std::cout << "Логин администратора успешно изменен!\n";
+}
+
+void Admin::ChangePassword() {
+    std::string password_new;
+    std::cout << "Напишите новый пароль: ";
+    std::getline(std::cin, password_new);
+    if (password_new.empty()) {
+        std::cout << "Пароль не может быть пустой!\n";
+        return;
+    }
+    this->password = password_new;
+    std::cout << "Пароль администратора успешно изменен!\n";
+}
+
 const std::string& Admin::GetLogin() const {
     return login;
 }
@@ -125,6 +149,7 @@ void Admin_Tools::ModifyGuest(std::vector<Guest>& guests){
     std::cout << "Ваш выбор: ";
     std::cin >> field_choice;
     std::string new_value;
+    std::cin.ignore();
     std::cout << "Введите новое значение: ";
     std::getline(std::cin, new_value);
     if (new_value.empty()) {
@@ -272,29 +297,221 @@ void Admin_Tools::ShowTests(const Tests& tests) const{
     std::cout << "Выберите категорию: ";
     std::cin >> category_choice;
     std::cin.ignore();
-    if (category_choice < 1 ||
-        category_choice > static_cast<int>(categories.size())) {
+    if (category_choice < 1 || category_choice > static_cast<int>(categories.size())) {
         std::cout << "Неверный номер категории!\n";
         return;
     }
-
     const Category& selected_category = categories[category_choice - 1];
-
-    std::cout << "\n===== ТЕСТЫ КАТЕГОРИИ: "
-        << selected_category.name << " =====\n";
-
+    std::cout << "\n===== ТЕСТЫ КАТЕГОРИИ: " << selected_category.name << " =====\n";
     if (selected_category.tests.empty()) {
         std::cout << "В этой категории пока нет тестов.\n";
         return;
     }
-
-    for (size_t i = 0; i < selected_category.tests.size(); i++) {
+    for (int i = 0; i < selected_category.tests.size(); i++) {
         const Test& test = selected_category.tests[i];
-
-        std::cout << "\nТест №" << i + 1 << '\n';
-        std::cout << "ID: " << test.id << '\n';
-        std::cout << "Название: " << test.name << '\n';
-        std::cout << "Количество вопросов: "
-            << test.questions.size() << '\n';
+        std::cout << "\nТест №" << i + 1 << '\n' << "ID: " << test.id << '\n' << "Название: " << test.name << '\n'
+            << "Количество вопросов: " << test.questions.size() << '\n';
     }
+}
+
+void Admin_Tools::AddTest(Tests& tests){
+    const std::vector<Category>& categories = tests.GetCategories();
+    if (categories.empty()) {
+        std::cout << "\nСначала создайте категорию!\n";
+        return;
+    }
+    std::cout << "\n===== ДОБАВЛЕНИЕ ТЕСТА =====\n";
+    for (int i = 0; i < categories.size(); i++) {
+        std::cout << i + 1 << ". " << categories[i].name << '\n';
+    }
+    int category_choice;
+    std::cout << "Выберите категорию для нового теста: ";
+    std::cin >> category_choice;
+    std::cin.ignore();
+    if (category_choice < 1 || category_choice > static_cast<int>(categories.size())) {
+        std::cout << "Неверный номер категории!\n";
+        return;
+    }
+    std::string test_name;
+    std::cout << "Введите название теста: ";
+    std::getline(std::cin, test_name);
+    if (test_name.empty()) {
+        std::cout << "Название теста не может быть пустым!\n";
+        return;
+    }
+    int max_id = 0;
+    for (const Category& category : categories) {
+        for (const Test& test : category.tests) {
+            if (test.id > max_id) {
+                max_id = test.id;
+            }
+        }
+    }
+    Test new_test;
+    new_test.id = max_id + 1;
+    new_test.name = test_name;
+    tests.AddTest(category_choice - 1, new_test);
+    std::cout << "\nТест успешно добавлен!\n";
+    std::cout << "Присвоенный ID: " << new_test.id << '\n';
+}
+
+void Admin_Tools::DeleteTest(Tests& tests){
+    const std::vector<Category>& categories = tests.GetCategories();
+    if (categories.empty()) {
+        std::cout << "\nКатегорий пока нет.\n";
+        return;
+    }
+    std::cout << "\n===== УДАЛЕНИЕ ТЕСТА =====\n";
+    for (int i = 0; i < categories.size(); i++) {
+        std::cout << i + 1 << ". " << categories[i].name << '\n';
+    }
+    int category_choice;
+    std::cout << "Выберите категорию: ";
+    std::cin >> category_choice;
+    std::cin.ignore();
+    if (category_choice < 1 || category_choice > static_cast<int>(categories.size())) {
+        std::cout << "Неверная категория!\n";
+        return;
+    }
+    const Category& selected_category = categories[category_choice - 1];
+    if (selected_category.tests.empty()) {
+        std::cout << "В этой категории нет тестов.\n";
+        return;
+    }
+    for (int i = 0; i < selected_category.tests.size(); i++) {
+        std::cout << i + 1 << ". " << selected_category.tests[i].name << " (ID: " << selected_category.tests[i].id << ")\n";
+    }
+    int test_choice;
+    std::cout << "Выберите тест для удаления: ";
+    std::cin >> test_choice;
+    std::cin.ignore();
+    if (test_choice < 1 || test_choice > static_cast<int>(selected_category.tests.size())) {
+        std::cout << "Неверный номер теста!\n";
+        return;
+    }
+    tests.DeleteTest(category_choice - 1, test_choice - 1);
+    std::cout << "Тест успешно удалён!\n";
+}
+
+void Admin_Tools::ManageTests(Tests& tests){
+    int choice = 0;
+    do {
+        std::cout << "\n===== УПРАВЛЕНИЕ ТЕСТАМИ =====\n";
+        std::cout << "1. Просмотреть тесты\n";
+        std::cout << "2. Добавить тест\n";
+        std::cout << "3. Удалить тест\n";
+        std::cout << "4. Добавить вопрос\n";
+        std::cout << "5. Вернуться назад\n";
+        std::cout << "Ваш выбор: ";
+        std::cin >> choice;
+        std::cin.ignore();
+        switch (choice) {
+        case 1:
+            ShowTests(tests);
+            break;
+        case 2:
+            AddTest(tests);
+            break;
+        case 3:
+            DeleteTest(tests);
+            break;
+        case 4:
+            AddQuestion(tests);
+            break;
+        case 5:
+            std::cout << "Возвращаемся назад...\n";
+            break;
+        default:
+            std::cout << "Неверный выбор!\n";
+        }
+    } while (choice != 5);
+}
+
+void Admin_Tools::AddQuestion(Tests& tests) {
+    const auto& categories = tests.GetCategories();
+    if (categories.empty()) {
+        std::cout << "Нет доступных категорий!\n";
+        return;
+    }
+    std::cout << "\nВыберите категорию:\n";
+    for (int i = 0; i < categories.size(); i++) {
+        std::cout << i + 1 << ". " << categories[i].name << '\n';
+    }
+    int category_choice;
+    std::cout << "Ваш выбор: ";
+    std::cin >> category_choice;
+    if (category_choice < 1 || category_choice > categories.size()) {
+        std::cout << "Неверный выбор!\n";
+        return;
+    }
+    int category_index = category_choice - 1;
+    if (categories[category_index].tests.empty()) {
+        std::cout << "В этой категории нет тестов!\n";
+        return;
+    }
+    std::cout << "\nВыберите тест:\n";
+    for (int i = 0; i < categories[category_index].tests.size(); i++) {
+        std::cout << i + 1 << ". " << categories[category_index].tests[i].name << '\n';
+    }
+    int test_choice;
+    std::cout << "Ваш выбор: ";
+    std::cin >> test_choice;
+    if (test_choice < 1 || test_choice > categories[category_index].tests.size()) {
+        std::cout << "Неверный выбор!\n";
+        return;
+    }
+    int test_index = test_choice - 1;
+    std::cin.ignore();
+    Question question;
+    std::cout << "\nВведите текст вопроса: ";
+    std::getline(std::cin, question.text);
+    if (question.text.empty()) {
+        std::cout << "Вопрос не может быть пустым!\n";
+        return;
+    }
+    int answer_count;
+    std::cout << "Введите количество вариантов ответа (от 2 до 6): ";
+    std::cin >> answer_count;
+    if (answer_count < 2 || answer_count > 6) {
+        std::cout << "Недопустимое количество ответов!\n";
+        return;
+    }
+    std::cin.ignore();
+    for (int i = 0; i < answer_count; i++) {
+        Answer answer;
+        std::cout << "Введите вариант ответа " << i + 1 << ": ";
+        std::getline(std::cin, answer.text);
+        if (answer.text.empty()) {
+            std::cout << "Ответ не может быть пустым!\n";
+            return;
+        }
+        answer.is_correct = false;
+        question.answers.push_back(answer);
+    }
+    int correct_choice;
+    std::cout << "\nВведите номер правильного ответа (1-" << answer_count << "): ";
+    std::cin >> correct_choice;
+    if (correct_choice < 1 || correct_choice > answer_count) {
+        std::cout << "Неверный номер ответа!\n";
+        return;
+    }
+    question.answers[correct_choice - 1].is_correct = true;
+    tests.AddQuestion(category_index, test_index, question);
+    std::cout << "\nВопрос успешно добавлен!\n";
+}
+
+void Admin_Tools::ShowStatistics(Tests& tests) const {
+    const auto& categories = tests.GetCategories();
+    int total_tests = 0;
+    int total_questions = 0;
+    for (const Category& category : categories) {
+        total_tests += static_cast<int>(category.tests.size());
+        for (const Test& test : category.tests) {
+            total_questions += static_cast<int>(test.questions.size());
+        }
+    }
+    std::cout << "\n========== СТАТИСТИКА СИСТЕМЫ ==========\n";
+    std::cout << "Количество категорий: " << categories.size() << '\n';
+    std::cout << "Количество тестов: " << total_tests << '\n';
+    std::cout << "Количество вопросов: " << total_questions << '\n';
 }

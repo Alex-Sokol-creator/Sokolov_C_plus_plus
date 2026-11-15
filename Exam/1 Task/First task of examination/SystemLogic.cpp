@@ -320,7 +320,9 @@ void SystemLogic::AdminMenu(){
         std::cout << "5. Управление категориями\n";
         std::cout << "6. Управление тестами\n";
         std::cout << "7. Статистика\n";
-        std::cout << "8. Выход\n";
+        std::cout << "8. Изменить логин администратора\n";
+        std::cout << "9. Изменить пароль администратора\n";
+        std::cout << "10. Выход\n";
         std::cout << "Ваш выбор: ";
         std::cin >> choice;
         switch (choice) {
@@ -340,16 +342,24 @@ void SystemLogic::AdminMenu(){
             admin.GetTools().ManageCategories(tests);
             break;
         case 6:
-            // Управление тестами
+            admin.GetTools().ManageTests(tests);
             break;
         case 7:
-            // Статистика
+            admin.GetTools().ShowStatistics(tests);
             break;
         case 8:
+            std::cin.ignore();
+            admin.ChangeLogin();
+            break;
+        case 9:
+            std::cin.ignore();
+            admin.ChangePassword();
+            break;
+        case 10:
             std::cout << "Выход из административного меню...\n";
             break;
         default:
             std::cout << "Неверный выбор!\n";
         }
-    } while (choice != 8);
+    } while (choice != 10);
 }

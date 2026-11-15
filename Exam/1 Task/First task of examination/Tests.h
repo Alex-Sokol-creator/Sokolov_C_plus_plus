@@ -38,5 +38,6 @@ public:
 	const std::vector<Category>& GetCategories() const; // Взять категории
 	void AddTest(int category_index, const Test& test); // Добавить тест
 	void DeleteTest(int category_index, int test_index); // Удалить тест
+	void AddQuestion(int category_index, int test_index, const Question& question); // Добавить вопрос
 };
 
