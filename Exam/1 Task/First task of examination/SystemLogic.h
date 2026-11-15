@@ -18,6 +18,9 @@ public:
 
 	void SaveAdmin(const Admin& admin, bool registered);
 	void LoadAdmin(Admin& admin, bool& registered);
+
+	std::string Encrypt(const std::string& text);
+	std::string Decrypt(const std::string& text); // Расшифровка
 };
 
 class SystemLogic
@@ -36,7 +39,6 @@ public:
 	void AdminRegistration(); // Регистрация админа + шифровка
 	void GuestsRegistration(); // Регистрация гостей + шифрование
 	bool IsLoginTaken(const std::string& login) const;
-	void Uncoding(); // Расшифровка
 	void Entering_the_system_guests(); // Вход гостей
 	void Entering_the_system_admin(); // Вход админа
 

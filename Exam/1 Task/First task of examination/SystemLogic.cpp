@@ -384,6 +384,34 @@ void SystemLogic::AdminMenu(){
 
 // Сохранение и загрузка
 
+std::string Files::Encrypt(const std::string& text) {
+    std::string result;
+    for (char symbol : text) {
+        if (symbol >= 'a' && symbol <= 'z') {
+            symbol = (symbol - 'a' + 3) % 26 + 'a';
+        }
+        else if (symbol >= 'A' && symbol <= 'Z') {
+            symbol = (symbol - 'A' + 3) % 26 + 'A';
+        }
+        result += symbol;
+    }
+    return result;
+}
+
+std::string Files::Decrypt(const std::string& text) {
+    std::string result;
+    for (char symbol : text) {
+        if (symbol >= 'a' && symbol <= 'z') {
+            symbol = (symbol - 'a' - 3 + 26) % 26 + 'a';
+        }
+        else if (symbol >= 'A' && symbol <= 'Z') {
+            symbol = (symbol - 'A' - 3 + 26) % 26 + 'A';
+        }
+        result += symbol;
+    }
+    return result;
+}
+
 void Files::SaveTests(const Tests& tests) {
     std::ofstream file("tests.txt"); // Запись данных в файл
     if (file.is_open() != true) {
@@ -478,8 +506,8 @@ void Files::SaveGuests(const std::vector<Guest>& guests) {
         file << std::quoted(data.fathers_name) << '\n';
         file << std::quoted(guest.GetAddress()) << '\n';
         file << std::quoted(guest.GetPhoneNumber()) << '\n';
-        file << std::quoted(guest.GetLogin()) << '\n';
-        file << std::quoted(guest.GetPassword()) << '\n';
+        file << std::quoted(Encrypt(guest.GetLogin())) << '\n';
+        file << std::quoted(Encrypt(guest.GetPassword())) << '\n';
         const auto& results = guest.GetResults();
         file << results.size() << '\n';
         for (const TestResult& result : results) {
@@ -521,6 +549,8 @@ void Files::LoadGuests(std::vector<Guest>& guests) {
             std::cout << "Ошибка загрузки данных гостя!\n";
             return;
         }
+        login = Decrypt(login);
+        password = Decrypt(password);
         Guest guest(data, address, phone, login, password);
         int result_count;
         if (!(file >> result_count) || result_count < 0) {
@@ -561,8 +591,8 @@ void Files::SaveAdmin(const Admin& admin, bool registered) {
     file << std::quoted(data.fathers_name) << '\n';
     file << std::quoted(admin.GetAddress()) << '\n';
     file << std::quoted(admin.GetPhoneNumber()) << '\n';
-    file << std::quoted(admin.GetLogin()) << '\n';
-    file << std::quoted(admin.GetPassword()) << '\n';
+    file << std::quoted(Encrypt(admin.GetLogin())) << '\n';
+    file << std::quoted(Encrypt(admin.GetPassword())) << '\n';
     std::cout << "Данные администратора успешно сохранены!\n";
 }
 
@@ -598,6 +628,8 @@ void Files::LoadAdmin(Admin& admin, bool& registered) {
         std::cout << "Ошибка чтения данных администратора!\n";
         return;
     }
+    login = Decrypt(login);
+    password = Decrypt(password);
     admin = Admin(data, address, phone, login, password);
     std::cout << "Данные администратора успешно загружены!\n";
 }
