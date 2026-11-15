@@ -39,5 +39,7 @@ public:
 	void AddTest(int category_index, const Test& test); // Добавить тест
 	void DeleteTest(int category_index, int test_index); // Удалить тест
 	void AddQuestion(int category_index, int test_index, const Question& question); // Добавить вопрос
+
+	void SetCategories(const std::vector<Category>& new_categories); // Назначить категории в момент загрузки
 };
 

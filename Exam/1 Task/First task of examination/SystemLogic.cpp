@@ -2,8 +2,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <iomanip>
 
 
+// Базовые категории, тесты, вопросы и ответы
 SystemLogic::SystemLogic(){
     Category C_plus_plus;
     C_plus_plus.name = "C++";
@@ -57,8 +60,12 @@ SystemLogic::SystemLogic(){
     General_knowledges.tests.push_back(General_knowledges_test);
     tests.AddCategory(C_plus_plus);
     tests.AddCategory(General_knowledges);
+
+    files.LoadTests(tests);
 }
 
+
+// Запуск программы
 
 void SystemLogic::Run()
 {
@@ -91,6 +98,7 @@ void SystemLogic::Run()
             break;
         }
         case 5: {
+            files.SaveTests(tests);
             std::cout << "Завершение программы...\n";
             break;
         }
@@ -100,6 +108,9 @@ void SystemLogic::Run()
         }
     } while (choice != 5);
 }
+
+
+// Контроль гостя
 
 void SystemLogic::GuestsRegistration()
 {
@@ -243,6 +254,8 @@ void SystemLogic::StartGuestTesting(Guest& guest)
 }
 
 
+// Админ
+
 void SystemLogic::AdminRegistration(){
     if (admin_registered) {
         std::cout << "Администратор уже зарегистрирован!\n";
@@ -362,4 +375,88 @@ void SystemLogic::AdminMenu(){
             std::cout << "Неверный выбор!\n";
         }
     } while (choice != 10);
+}
+
+
+// Сохранение и загрузка
+
+void Files::SaveTests(const Tests& tests) {
+    std::ofstream file("tests.txt");
+    if (file.is_open() != true) {
+        std::cout << "Не удалось открыть файл для сохранения!\n";
+        return;
+    }
+    const auto& categories = tests.GetCategories();
+    file << categories.size() << '\n';
+    for (const Category& category : categories) {
+        file << std::quoted(category.name) << '\n';
+        file << category.tests.size() << '\n';
+        for (const Test& test : category.tests) {
+            file << test.id << '\n';
+            file << std::quoted(test.name) << '\n';
+            file << test.questions.size() << '\n';
+            for (const Question& question : test.questions) {
+                file << std::quoted(question.text) << '\n';
+                file << question.answers.size() << '\n';
+                for (const Answer& answer : question.answers) {
+                    file << std::quoted(answer.text) << ' '
+                        << answer.is_correct << '\n';
+                }
+            }
+        }
+    }
+    std::cout << "Тесты успешно сохранены в файл!\n";
+}
+
+void Files::LoadTests(Tests& tests) {
+    std::ifstream file("tests.txt");
+    if (file.is_open() != true) {
+        std::cout << "Файл с тестами не найден. Используются стандартные тесты.\n";
+        return;
+    }
+    std::vector<Category> loaded_categories;
+    int category_count;
+    if (!(file >> category_count) || category_count < 0) {
+        std::cout << "Ошибка формата файла!\n";
+        return;
+    }
+
+    for (int i = 0; i < category_count; i++) {
+        Category category;
+        int test_count;
+        if (!(file >> std::quoted(category.name) >> test_count) ||
+            test_count < 0) {
+            std::cout << "Ошибка загрузки категорий!\n";
+            return;
+        }
+        for (int j = 0; j < test_count; j++) {
+            Test test;
+            int question_count;
+            if (!(file >> test.id >> std::quoted(test.name) >> question_count) || question_count < 0) {
+                std::cout << "Ошибка загрузки тестов!\n";
+                return;
+            }
+            for (int k = 0; k < question_count; k++) {
+                Question question;
+                int answer_count;
+                if (!(file >> std::quoted(question.text) >> answer_count) || answer_count < 0) {
+                    std::cout << "Ошибка загрузки вопросов!\n";
+                    return;
+                }
+                for (int a = 0; a < answer_count; a++) {
+                    Answer answer;
+                    if (!(file >> std::quoted(answer.text) >> answer.is_correct)) {
+                        std::cout << "Ошибка загрузки ответов!\n";
+                        return;
+                    }
+                    question.answers.push_back(answer);
+                }
+                test.questions.push_back(question);
+            }
+            category.tests.push_back(test);
+        }
+        loaded_categories.push_back(category);
+    }
+    tests.SetCategories(loaded_categories);
+    std::cout << "Тесты успешно загружены из файла!\n";
 }

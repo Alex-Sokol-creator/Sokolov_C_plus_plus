@@ -69,3 +69,7 @@ void Tests::AddQuestion(int category_index, int test_index, const Question& ques
 	}
 	categories[category_index].tests[test_index].questions.push_back(question);
 }
+
+void Tests::SetCategories(const std::vector<Category>& new_categories) {
+	categories = new_categories;
+}

@@ -13,8 +13,7 @@ public:
 	void SaveGuests(const std::vector<Guest>& guests);
 
 	void SaveTests(const Tests& tests);
-
-	void SaveResults();
+	void LoadTests(Tests& tests);
 };
 
 class SystemLogic
