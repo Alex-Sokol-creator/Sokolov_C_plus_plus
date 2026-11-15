@@ -337,7 +337,7 @@ void SystemLogic::AdminMenu(){
             admin.GetTools().ModifyGuest(All_Guests);
             break;
         case 5:
-            // Управление категориями
+            admin.GetTools().ManageCategories(tests);
             break;
         case 6:
             // Управление тестами

@@ -85,7 +85,7 @@ void TestAttempt::RunQuestions(const Test& selected_test){
     }
     ongoing_test = false;
     paused = false;
-    finished == true; // Когда тест закончился
+    finished = true; // Когда тест закончился
     std::cout << "\nТест завершен!\n";
     CalculateResult(selected_test);
 }
@@ -101,12 +101,13 @@ void TestAttempt::StartTest(const Test& selected_test){
     result_grade = 0;
     ongoing_test = true;
     paused = false;
+    finished = false;
     user_answers.assign(selected_test.questions.size(), -1);
     std::cout << "\n===== НАЧАЛО ТЕСТА =====\n";
     std::cout << "Название теста: " << selected_test.name << '\n';
     std::cout << "Количество вопросов: " << selected_test.questions.size() << '\n';
     RunQuestions(selected_test);
-    while (ongoing_test && paused) {
+    while (ongoing_test == true && paused == true) {
         int choice = 0;
         std::cout << "\nТест приостановлен.\n";
         std::cout << "1. Продолжить тест\n" << "2. Выйти из теста\n" << "Ваш выбор: ";

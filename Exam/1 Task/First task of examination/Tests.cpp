@@ -30,3 +30,32 @@ const Test* Tests::ChooseTest(const Category& category) const {
 void Tests::AddCategory(const Category& category){
 	categories.push_back(category);
 }
+
+void Tests::DeleteCategory(int index) {
+	if (index < 0 || index >= categories.size()) {
+		return;
+	}
+	categories.erase(categories.begin() + index);
+}
+
+const std::vector<Category>& Tests::GetCategories() const {
+	return categories;
+}
+
+void Tests::AddTest(int category_index, const Test& test){
+	if (category_index < 0 || category_index >= static_cast<int>(categories.size())) {
+		return;
+	}
+	categories[category_index].tests.push_back(test);
+}
+
+void Tests::DeleteTest(int category_index, int test_index){
+	if (category_index < 0 || category_index >= static_cast<int>(categories.size())) {
+		return;
+	}
+	std::vector<Test>& selected_tests = categories[category_index].tests;
+	if (test_index < 0 || test_index >= static_cast<int>(selected_tests.size())) {
+		return;
+	}
+	selected_tests.erase(selected_tests.begin() + test_index);
+}

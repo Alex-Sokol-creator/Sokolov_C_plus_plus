@@ -34,5 +34,9 @@ public:
 	const Category* ChooseCategory() const; // Выбор категории теста
 	const Test* ChooseTest(const Category& category) const; // Выбор конкретного теста
 	void AddCategory(const Category& category); // Добавить категорию
+	void DeleteCategory(int index); // Удалить категорию
+	const std::vector<Category>& GetCategories() const; // Взять категории
+	void AddTest(int category_index, const Test& test); // Добавить тест
+	void DeleteTest(int category_index, int test_index); // Удалить тест
 };
 

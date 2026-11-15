@@ -11,11 +11,20 @@ public:
 	void AddGuest(std::vector<Guest>& guests);
 	void DeleteGuest(std::vector<Guest>& guests);
 	void ModifyGuest(std::vector<Guest>& guests);
+
 	void AddCategory(Tests& tests);
 	void DeleteCategory(Tests& tests);
+	void ShowCategories(const Tests& tests) const;
+	void ManageCategories(Tests& tests);
+
 	void AddTest(Tests& tests);
+	void ShowTests(const Tests& tests) const;
+	void ManageTests(Tests& tests);
+
 	void AddQuestion(Tests& tests);
+
 	void ShowStatistics(Tests& tests) const;
+
 	void ImportText();
 	void ExportText();
 
